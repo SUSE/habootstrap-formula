@@ -18,6 +18,9 @@ bootstrap-cluster:
         - SBD_DEVICE: {{ cluster.sbd.device }}
         {% endif %}
         {% endif %}
+        {% if cluster.admin_ip is defined %}
+        - ADMIN_IP: {{ cluster.admin_ip }}
+        {% endif %}
 
 include:
   - .service

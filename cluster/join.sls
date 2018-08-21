@@ -5,7 +5,7 @@ join-cluster:
   cmd.run:
     - source: salt://cluster/files/join.sh
     - env:
-        - IP: {{ TODO }}
+        - IP: {{ cluster.join_ip }}
         {% if cluster.watchdog is defined %}
         - WATCHDOG: {{ cluster.watchdog }}
         {% endif %}

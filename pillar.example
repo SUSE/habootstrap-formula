@@ -2,6 +2,16 @@ cluster:
   # Cluster name
   name: hacluster
 
+  # Bootstrapping mode: should be create
+  # for one minion and join for the others
+  mode: create
+
+  # Temporary: When joining, we need an
+  # IP address to reach the already-created
+  # node. This is only used by the joining
+  # minions.
+  join_ip: 1.2.3.4
+
   # optional: Configure the watchdog device
   watchdog: /dev/watchdog
 
@@ -12,7 +22,7 @@ cluster:
   unicast: True
 
   # optional: configure a virtual IP resource in cluster
-  admin-ip: 10.20.30.40
+  admin_ip: 10.20.30.40
 
   # optional: configure SBD
   sbd:
