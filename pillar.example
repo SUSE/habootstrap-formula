@@ -1,0 +1,24 @@
+cluster:
+  # Cluster name
+  name: hacluster
+
+  # optional: Configure the watchdog device
+  watchdog: /dev/watchdog
+
+  # optional: Network interface to use for cluster communication
+  interface: eth0
+
+  # optional: UDP instead of multicast
+  unicast: True
+
+  # optional: configure a virtual IP resource in cluster
+  admin-ip: 10.20.30.40
+
+  # optional: configure SBD
+  sbd:
+    # optional: configure an SBD device
+    device: /dev/by-label/sbd-disk
+
+
+# -*- mode: yaml -*-
+# vim: ft=yaml
