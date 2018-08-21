@@ -2,9 +2,9 @@ cluster:
   # Cluster name
   name: hacluster
 
-  # Bootstrapping mode: should be create
+  # Bootstrapping mode: should be init
   # for one minion and join for the others
-  mode: create
+  mode: init
 
   # Temporary: When joining, we need an
   # IP address to reach the already-created
