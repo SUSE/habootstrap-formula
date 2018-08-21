@@ -21,6 +21,9 @@ bootstrap-cluster:
         {% if cluster.admin_ip is defined %}
         - ADMIN_IP: {{ cluster.admin_ip }}
         {% endif %}
+        {% if cluster.unicast is defined and cluster.unicast %}
+        - UNICAST: "yes"
+        {% endif %}
 
 include:
   - .service

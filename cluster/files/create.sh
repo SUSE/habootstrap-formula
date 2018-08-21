@@ -11,6 +11,9 @@ fi
 if [ -n "$ADMIN_IP" ]; then
 	ARGS="$ARGS -A $ADMIN_IP"
 fi
+if [ "$UNICAST" = "yes" ]; then
+	ARGS="$ARGS -u"
+fi
 if [ -n "$SBD" ]; then
 	ARGS="$ARGS --enable-sbd"
 	if [ -n "$SBD_DEVICE" ]; then
