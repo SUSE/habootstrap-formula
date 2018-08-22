@@ -1,0 +1,14 @@
+sudo: required
+language: python
+services: 
+  - docker
+
+before_install:
+  - bundle install
+
+env:
+  matrix:
+    - INSTANCE: cluster-init-leap-15
+
+script:
+  - bundle exec kitchen verify ${INSTANCE}
