@@ -11,9 +11,10 @@ verifier:
     - test/integration/cluster/inspec
 
 platforms:
-  - name: leap-15
+  - name: opensuse
     driver_config:
       image: opensuse/leap:15
+      platform: opensuse
       run_command: /usr/lib/systemd/systemd
       provision_command:
         - systemctl enable sshd.service
