@@ -4,6 +4,11 @@ driver:
   use_sudo: false
   privileged: true
   require_chef_omnibus: false
+  run_command: /usr/lib/systemd/systemd
+  cap_add:
+    - SYS_ADMIN
+  volume:
+    - /sys/fs/cgroup    
 
 verifier:
   name: inspec
