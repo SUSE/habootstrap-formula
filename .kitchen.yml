@@ -18,10 +18,12 @@ platforms:
       run_command: /usr/lib/systemd/systemd
       provision_command:
         - systemctl enable sshd.service
+        - zypper -y in zypper -n --gpg-auto-import-keys in crmsh resource-agents fence-agents salt ruby2.5-rubygem-bundler ruby-devel gcc-c++ make
 provisioner:
   name: salt_solo
   require_chef: false
   formula: cluster
+  salt_install: distrib
   state_top:
     base:
       '*':
