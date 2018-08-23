@@ -19,7 +19,7 @@ platforms:
       provision_command:
         - /usr/sbin/sshd-gen-keys-start
         - /usr/sbin/sshd
-        - zypper -n --gpg-auto-import-keys in crmsh resource-agents fence-agents salt ruby2.5-rubygem-bundler ruby-devel gcc-c++ make
+        - zypper -n --gpg-auto-import-keys in crmsh resource-agents fence-agents salt
 provisioner:
   name: salt_solo
   require_chef: false
