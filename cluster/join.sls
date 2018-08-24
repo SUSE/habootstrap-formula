@@ -1,9 +1,8 @@
 {%- from "cluster/map.jinja" import cluster with context -%}
 
 # Attempt to join the cluster
-join-cluster:
-  cmd.run:
-    - source: salt://cluster/files/join.sh
+salt://cluster/files/join.sh:
+  cmd.script:
     - env:
         - IP: {{ cluster.join_ip }}
         {% if cluster.watchdog is defined %}
@@ -13,5 +12,8 @@ join-cluster:
         - INTERFACE: {{ cluster.interface }}
         {% endif %}
 
-include:
-  - .service
+hawk:
+  service.running:
+    - enable: True
+    - require:
+        - cmd: salt://cluster/files/join.sh

@@ -1,9 +1,8 @@
 {%- from "cluster/map.jinja" import cluster with context -%}
 
 # Run the bootstrap
-bootstrap-cluster:
-  cmd.run:
-    - source: salt://cluster/files/create.sh
+salt://cluster/files/create.sh:
+  cmd.script:
     - env:
         - NAME: {{ cluster.name }}
         {% if cluster.watchdog is defined %}
@@ -25,5 +24,8 @@ bootstrap-cluster:
         - UNICAST: "yes"
         {% endif %}
 
-include:
-  - .service
+hawk:
+  service.running:
+    - enable: True
+    - require:
+        - cmd: salt://cluster/files/create.sh
