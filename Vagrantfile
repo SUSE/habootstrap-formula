@@ -9,15 +9,17 @@ end
 def configure_machine(machine, idx, roles, memory, cpus)
   machine.vm.network :private_network, ip: "10.13.38.#{10 + idx}"
 
-  machine.vm.provision "shell", inline: "zypper in -y -l salt"
+  machine.vm.provision "shell", inline: "zypper -n rr systemsmanagement-salt; zypper in -y -l salt"
 
   machine.vm.provision :salt do |salt|
     salt.masterless = true
     salt.minion_config = "test/salt/etc/minion"
     salt.run_highstate = true
-    salt.verbose = true
+    #salt.verbose = true
     salt.no_minion = true
     salt.always_install = false
+    salt.install_type = "stable"
+    salt.bootstrap_options = "-b"
   end
 
   # Change hacluster user's shell from nologin to /bin/bash to avoid issues with bindfs

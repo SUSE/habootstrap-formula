@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+vagrant ssh node1 -- sudo salt '\*' state.highstate
+vagrant ssh node2 -- sudo crm status
+vagrant ssh node3 -- sudo crm status

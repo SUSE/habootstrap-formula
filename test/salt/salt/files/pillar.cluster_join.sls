@@ -1,3 +1,3 @@
 cluster:
   mode: join
-  join_ip: node1
+  join_ip: node2
