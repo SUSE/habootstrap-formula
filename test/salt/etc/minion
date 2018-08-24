@@ -1,0 +1,7 @@
+file_client: local
+file_roots:
+  base:
+    - /vagrant/test/salt/salt
+pillar_roots:
+  base:
+    - /vagrant/test/salt/pillar
