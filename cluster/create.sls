@@ -20,7 +20,7 @@
 {% endif %}
 
 bootstrap-the-cluster:
-  cmd.script:
+  cmd.run:
     - name: /usr/sbin/crm cluster init {{ create_args }}
     - unless: systemctl -q is-active pacemaker
 

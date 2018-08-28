@@ -15,7 +15,7 @@ wait-for-cluster:
     - verify_ssl: false
 
 join-the-cluster:
-  cmd.script:
+  cmd.run:
     - name: /usr/sbin/crm cluster join {{ join_args }}
     - unless: systemctl -q is-active pacemaker
     - require:
