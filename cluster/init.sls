@@ -5,9 +5,14 @@
 include:
   - .create
 
-{% else %}
+{% elif cluster.mode == "join" %}
 
 include:
   - .join
+
+{% elif cluster.mode == "remove" %}
+
+include:
+  - .remove
 
 {% endif %}
