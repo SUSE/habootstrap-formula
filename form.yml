@@ -1,0 +1,21 @@
+cluster:
+  $type: hidden-group
+
+  name:
+    $type: text
+    $default: hacluster
+
+  mode:
+    $type: select
+    $values: ["init", "join", "remove"]
+    $default: init
+
+  join_ip:
+    $type: text
+
+  unicast:
+    $type: boolean
+    $default: False
+
+
+  
