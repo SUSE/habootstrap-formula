@@ -1,7 +1,5 @@
 # HA Cluster bootstrap salt formula
 
-[![Build Status](https://travis-ci.org/krig/habootstrap-formula.svg?branch=master)](https://travis-ci.org/krig/habootstrap-formula)
-
 Formulas for bootstrapping and managing a high availability cluster
 using crmsh.
 
