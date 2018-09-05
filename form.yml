@@ -2,7 +2,7 @@ cluster:
   $type: hidden-group
 
   name:
-    $type: text
+    $name: Cluster name
     $default: hacluster
 
   mode:
@@ -11,7 +11,8 @@ cluster:
     $default: init
 
   join_ip:
-    $type: text
+    $name: Join Address
+    $placeholder: IP address or hostname to join (join mode only)
 
   unicast:
     $type: boolean
