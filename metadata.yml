@@ -1,0 +1,2 @@
+description:
+  Salt formula to bootstrap a HA cluster using crmsh bootstrap commands.
