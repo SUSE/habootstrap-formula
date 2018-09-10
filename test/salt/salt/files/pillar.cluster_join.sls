@@ -1,2 +1,3 @@
 cluster:
-  mode: remove
+  mode: join
+  join_ip: node2
