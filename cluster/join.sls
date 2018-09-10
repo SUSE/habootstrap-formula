@@ -1,5 +1,5 @@
 {%- from "cluster/map.jinja" import cluster with context -%}
-{% set join_args = "-y --c " + cluster.join_ip %}
+{% set join_args = "-y -c " + cluster.join_ip %}
 {% if cluster.watchdog is defined %}
   {% set join_args = join_args + " -w " + cluster.watchdog %}
 {% endif %}
