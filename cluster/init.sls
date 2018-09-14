@@ -6,7 +6,7 @@
 include:
   - .create
 
-{% elif host in cluster.remove %}
+{% elif cluster.remove is defined and host in cluster.remove %}
 
 include:
   - .remove

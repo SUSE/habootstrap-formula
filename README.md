@@ -6,16 +6,18 @@ using crmsh.
 Mainly adapted to SUSE / openSUSE Linux distributions, but should be
 usable on other distributions with minor modifications.
 
-## GOAL
+## Usage
 
-Enable the configuration and installation of a high availability
-cluster using salt. The basic machine setup doesn't have to be handled
-using this formula, but the configuration of the cluster itself should
-be.
+To use, configure the cluster options using pillar data as described
+in `pillar.example`. To create multiple clusters, different pillar
+data can be applied to different groups of nodes with different nodes
+as the init node.
 
-### OPEN QUESTIONS
-
-* stuff like ocfs2? do as a second step.
+**Important!** The hostnames and minion names of cluster nodes need to
+be the same for the cluster join procedure to work correctly, and the
+nodes need to be able to reach each other by hostname / minion
+name. To see an example of how this is configured, see
+`test/salt/salt/common/hosts.sls` in this repository.
 
 ## Integration with other formulae
 

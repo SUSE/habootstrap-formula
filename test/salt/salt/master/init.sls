@@ -31,3 +31,10 @@ salt-master:
     - user: root
     - group: root
     - mode: 644
+
+/srv/pillar/cluster.sls:
+  file.managed:
+    - source: salt://files/pillar.cluster.sls
+    - user: root
+    - group: root
+    - mode: 644

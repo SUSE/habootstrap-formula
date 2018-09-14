@@ -1,4 +1,3 @@
 base:
   '*':
-    cluster:
-      init: node2
+    - cluster
