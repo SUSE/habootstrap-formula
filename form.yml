@@ -5,18 +5,13 @@ cluster:
     $name: Cluster name
     $default: hacluster
 
-  mode:
-    $type: select
-    $values: ["init", "join", "remove"]
-    $default: init
-
-  join_ip:
-    $name: Join Address
-    $placeholder: IP address or hostname to join (join mode only)
-
+  init:
+    $placeholder: Minion which creates the cluster
+    
   unicast:
     $type: boolean
     $default: False
 
+  
 
   

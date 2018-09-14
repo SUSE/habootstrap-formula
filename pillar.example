@@ -2,15 +2,16 @@ cluster:
   # Cluster name
   name: hacluster
 
-  # Bootstrapping mode: should be init
-  # for one minion and join for the others
-  mode: init
+  # Node which will create the cluster.
+  # To create multiple clusters, set different
+  # pillar data with different nodes as
+  # firstnode. Each firstnode will create
+  # a separate cluster
+  init: minion-1
 
-  # Temporary: When joining, we need an
-  # IP address to reach the already-created
-  # node. This is only used by the joining
-  # minions.
-  # join_ip: 1.2.3.4
+  # optional: nodes that should be removed
+  # from the cluster.
+  # remove: []
 
   # optional: Configure the watchdog device
   # watchdog: /dev/watchdog
