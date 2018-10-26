@@ -1,65 +1,97 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-def host_bind_address
-  ENV['VAGRANT_INSECURE_FORWARDS'] =~ /^(y(es)?|true|on)$/i ? '*' : '127.0.0.1'
-end
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+NET_IP = "10.13.38"
 
-# Shared configuration for all VMs
-def configure_machine(machine, idx, roles, memory, cpus)
-  machine.vm.network :private_network, ip: "10.13.38.#{10 + idx}"
-
-  machine.vm.provision "shell", inline: "zypper --non-interactive --gpg-auto-import-keys ref; zypper --gpg-auto-import-keys in -y -l salt salt-minion"
-
-  machine.vm.provision :salt do |salt|
-    salt.masterless = true
-    salt.minion_config = "test/salt/etc/minion"
-    salt.run_highstate = true
-    #salt.verbose = true
-    salt.no_minion = true
-    salt.always_install = false
-    #salt.install_type = "stable"
-    #salt.bootstrap_options = "-b"
-  end
-
-  # Change hacluster user's shell from nologin to /bin/bash to avoid issues with bindfs
-  machine.vm.provision "shell", inline: "chsh -s /bin/bash hacluster"
-
-  machine.vm.provider :virtualbox do |provider, override|
-    provider.memory = memory
-    provider.cpus = cpus
-    provider.name = "bootstrap-#{machine.vm.hostname}"
-  end
-
-  machine.vm.provider :libvirt do |provider, override|
+# Master node configuration
+def configure_master(master_config, idx, roles, memory, cpus)
+  master_config.vm.network :private_network, ip: "#{NET_IP}.#{10 + idx}"
+  master_config.vm.provider :libvirt do |provider, override|
     provider.memory = memory
     provider.cpus = cpus
     provider.graphics_port = 9200 + idx
   end
+
+  master_config.vm.synced_folder "./test/salt", "/srv/salt", type: 'rsync'
+  master_config.vm.synced_folder "./test/pillar", "/srv/pillar", type: 'rsync'
+  master_config.vm.synced_folder "./cluster", "/srv/salt/cluster", type: 'rsync'
+
+  # salt-master must be installed this way, as install_master option does not work properly for thi distro
+  master_config.vm.provision "shell", inline: "zypper --non-interactive --gpg-auto-import-keys ref;zypper --gpg-auto-import-keys in -y -l salt-master"
+
+  master_config.vm.provision :salt do |salt|
+    salt.master_config = "test/config/etc/master"
+    salt.master_key = "test/config/sshkeys/vagrant"
+    salt.master_pub = "test/config/sshkeys/vagrant.pub"
+    # Add cluster nodes ssh public keys
+    salt.seed_master = {
+                        "node1" => "test/config/sshkeys/vagrant.pub",
+                        "node2" => "test/config/sshkeys/vagrant.pub"
+                       }
+
+    salt.install_type = "stable"
+    salt.install_master = true
+    salt.no_minion = true
+    salt.verbose = true
+    salt.colorize = true
+    salt.bootstrap_options = "-P -c /tmp"
+  end
+
+  # Change hacluster user's shell from nologin to /bin/bash to avoid issues with bindfs
+  master_config.vm.provision "shell", inline: "chsh -s /bin/bash hacluster"
+
 end
 
-Vagrant.configure("2") do |config|
-  #unless Vagrant.has_plugin?("vagrant-bindfs")
-  #  warn 'Missing bindfs plugin! Please install using vagrant plugin install vagrant-bindfs'
-  #end
+# Minoin node configuration
+def configure_minion(minion_config, idx, roles, memory, cpus)
+  minion_config.vm.network :private_network, ip: "#{NET_IP}.#{10 + idx + 1}"
+  minion_config.vm.provider :libvirt do |provider, override|
+    provider.memory = memory
+    provider.cpus = cpus
+    provider.graphics_port = 9200 + idx + 1
+  end
+
+  minion_config.vm.provision :salt do |salt|
+    salt.minion_id = "node#{idx}"
+    salt.minion_config = "test/config/etc/minion"
+    salt.minion_key = "test/config/sshkeys/vagrant"
+    salt.minion_pub = "test/config/sshkeys/vagrant.pub"
+    salt.install_type = "stable"
+    salt.verbose = true
+    salt.colorize = true
+    salt.bootstrap_options = "-P -c /tmp"
+  end
+
+  # Change hacluster user's shell from nologin to /bin/bash to avoid issues with bindfs
+  minion_config.vm.provision "shell", inline: "chsh -s /bin/bash hacluster"
+
+end
+
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "hawk/tumbleweed-ha"
   config.vm.box_version = "1.1.3"
   config.vm.box_check_update = true
   config.ssh.insert_key = false
 
-
   config.vm.synced_folder './', '/vagrant', type: 'rsync'
-  #config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false, mount_options: ["rw", "noatime", "async"]
-  #config.bindfs.bind_folder "/vagrant", "/vagrant", force_user: "hacluster", force_group: "haclient", perms: "u=rwX:g=rwXD:o=rXD", after: :provision
 
   # node1: salt master
-  # node2: cluster create
-  # node3: cluster join
-  1.upto(3).each do |i|
-    config.vm.define "node#{i}", primary: (i == 1), autostart: true do |machine|
+  config.vm.define :master, primary: true do |machine|
+    machine.vm.hostname = "master"
+    configure_master machine, 1, ["base", "node"], 768, 1
+  end
+
+  # node1: cluster create
+  # node2: cluster join
+  # update to add more nodes
+  1.upto(2).each do |i|
+    config.vm.define "node#{i}" do |machine|
       machine.vm.hostname = "node#{i}"
-      configure_machine machine, i, ["base", "node"], 768, 1
+      configure_minion machine, i, ["base", "node"], 768, 1
     end
   end
 

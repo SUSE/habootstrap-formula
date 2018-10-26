@@ -1,2 +1,0 @@
-cluster:
-  init: node2

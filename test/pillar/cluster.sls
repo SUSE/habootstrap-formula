@@ -1,0 +1,2 @@
+cluster:
+  init: node1
