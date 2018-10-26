@@ -70,11 +70,13 @@ To run the test follow the next steps:
 cd habootstrap-formula
 vagrant up
 vagrant ssh master -- sudo salt '\*' state.highstate
+vagrant ssh node1 -- sudo crm_mon -1s | grep "CLUSTER OK: 2 nodes online"
+vagrant ssh node2 -- sudo crm_mon -1s | grep "CLUSTER OK: 2 nodes online"
 ```
 
 These steps will create the cluster nodes (salt master, and two ha cluster nodes). In order to play with the formula, the file `test/pillar/cluster.sls` can be changed to apply different options to the cluster nodes (check the options in `pillar.example`).
 
-**Warning: salt highstate command may fail in the inti node, as the secondary nodes ssh public keys are already authorized in the initial node when pacemaker is started**
+**Warning: salt highstate command may show a failure in the init node, as the secondary nodes ssh public keys are already authorized in the initial node when pacemaker is started. Even this error the cluster is properly initialized.**
 
 To add more nodes to the cluster, new nodes information must be added to `Vagrantfile`, `test/salt/common/hosts.sls` and `test/salt/top.sls` files.
 
