@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e
 vagrant ssh master -- sudo salt '\*' state.highstate
-vagrant ssh node1 -- sudo crm_mon -1s | grep "CLUSTER OK: 2 nodes online"
-vagrant ssh node2 -- sudo crm_mon -1s | grep "CLUSTER OK: 2 nodes online"
+vagrant ssh node1 -- sudo crm_mon -1s | grep "CLUSTER OK: [1-9] nodes online,"
+vagrant ssh node2 -- sudo crm_mon -1s | grep "CLUSTER OK: [1-9] nodes online,"

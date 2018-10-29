@@ -2,10 +2,8 @@ master:
   host.present:
     - ip: 10.13.38.11
 
-node1:
+{% for idx in 1, 2, 3 %}
+node{{ idx }}:
   host.present:
-    - ip: 10.13.38.12
-
-node2:
-  host.present:
-    - ip: 10.13.38.13
+    - ip: 10.13.38.{{ idx + 11 }}
+{% endfor %}

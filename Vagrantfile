@@ -47,6 +47,7 @@ end
 # Minoin node configuration
 def configure_minion(minion_config, idx, roles, memory, cpus)
   minion_config.vm.network :private_network, ip: "#{NET_IP}.#{10 + idx + 1}"
+  minion_config.vm.network :forwarded_port, guest: 7630, host: 7630 + idx
   minion_config.vm.provider :libvirt do |provider, override|
     provider.memory = memory
     provider.cpus = cpus
@@ -87,8 +88,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # node1: cluster create
   # node2: cluster join
+  # node3: cluster join
   # update to add more nodes
-  1.upto(2).each do |i|
+  1.upto(3).each do |i|
     config.vm.define "node#{i}" do |machine|
       machine.vm.hostname = "node#{i}"
       configure_minion machine, i, ["base", "node"], 768, 1

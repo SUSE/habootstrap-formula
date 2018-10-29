@@ -1,7 +1,5 @@
 base:
   '*':
     - common
-  node1:
-    - cluster
-  node2:
+  'node*':
     - cluster
