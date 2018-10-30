@@ -17,11 +17,11 @@ as the init node.
 be the same for the cluster join procedure to work correctly, and the
 nodes need to be able to reach each other by hostname / minion
 name. To see an example of how this is configured, see
-`test/salt/salt/common/hosts.sls` in this repository.
+`test/salt/common/hosts.sls` in this repository.
 
-## Integration with other formulae
+## Integration with other formulas
 
-The following formulae pillars support HA cluster bootstrap-
+The following formula pillars support HA cluster bootstrap-
 
 * [firewalld-formula](https://github.com/saltstack-formulas/firewalld-formula)
 
@@ -46,9 +46,9 @@ The following formulae pillars support HA cluster bootstrap-
              services:
                - hacluster
 ```
-     
+
 * [packages-formula](https://github.com/saltstack-formulas/packages-formula>)
-     
+
 ``` yaml     
      extends:
        packages:
@@ -58,4 +58,38 @@ The following formulae pillars support HA cluster bootstrap-
              - resource-agents
              - fence-agents
              - sbd
+```
+
+## Test
+
+In order to deploy a dummy cluster the repository contains a vagrant/salt configuration to see the hacluster formula working and run the desired configuration options.
+
+To run the test follow the next steps:
+
+``` bash
+cd habootstrap-formula
+vagrant up
+vagrant ssh master -- sudo salt '\*' state.highstate
+vagrant ssh node1 -- sudo crm_mon -1s | grep "CLUSTER OK: 2 nodes online"
+vagrant ssh node2 -- sudo crm_mon -1s | grep "CLUSTER OK: 2 nodes online"
+```
+
+These steps will create the cluster nodes (salt master, and two ha cluster nodes). In order to play with the formula, the file `test/pillar/cluster.sls` can be changed to apply different options to the cluster nodes (check the options in `pillar.example`).
+
+**Warning: salt highstate command may show a failure in the init node, as the secondary nodes ssh public keys are already authorized in the initial node when pacemaker is started. Even this error the cluster is properly initialized.**
+
+To add more nodes to the cluster, new nodes information must be added to `Vagrantfile`, `test/salt/common/hosts.sls` and `test/salt/top.sls` files.
+
+To access to the different nodes and play with them run:
+
+``` bash
+vagrant ssh {nodename}
+```
+
+### Troubleshooting
+
+To run the test `libvirt` tools must be installed and the daemon running. For that:
+``` bash
+zypper in libvirt
+service libvritd start
 ```
