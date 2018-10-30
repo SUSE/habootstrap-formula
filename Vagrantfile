@@ -1,8 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
+# NET_IP is used as the base private network
+# between the cluster nodes. To avoid collisions
+# with any other networks you have configured,
+# you can modify this. However, it will also be
+# necessary to update the salt configuration in
+# test/ which hard-codes the IP addresses of the
+# nodes.
 NET_IP = "10.13.38"
 
 # Master node configuration
@@ -71,7 +76,7 @@ def configure_minion(minion_config, idx, roles, memory, cpus)
 end
 
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure("2") do |config|
 
   config.vm.box = "hawk/tumbleweed-ha"
   config.vm.box_version = "1.1.3"
