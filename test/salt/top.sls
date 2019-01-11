@@ -1,5 +1,6 @@
 base:
-  '*':
-    - common
+  'master':
+    - master
   'node*':
+    - common
     - cluster

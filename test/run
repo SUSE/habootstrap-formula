@@ -1,5 +1,8 @@
 #!/bin/bash
 set -e
+vagrant ssh master -- sudo rm /etc/salt/minion
+vagrant ssh master -- sudo salt-call --local state.apply
 vagrant ssh master -- sudo salt '\*' state.highstate
 vagrant ssh node1 -- sudo crm_mon -1s | grep "CLUSTER OK: [1-9] nodes online,"
 vagrant ssh node2 -- sudo crm_mon -1s | grep "CLUSTER OK: [1-9] nodes online,"
+vagrant ssh node3 -- sudo crm_mon -1s | grep "CLUSTER OK: [1-9] nodes online,"
