@@ -26,9 +26,15 @@ cluster:
   # admin_ip: 10.20.30.40
 
   # optional: configure SBD
-  #sbd:
-  #  # optional: configure an SBD device
-  #  device: /dev/by-label/sbd-disk
+  # sbd:
+  #   # optional: configure an SBD device
+  #   device: /dev/by-label/sbd-disk
+
+  # optional: configure cluster
+  # configure:
+  #   method: update
+  #   url: path_to_configfile
+  #   is_xml: False
 
 
 # -*- mode: yaml -*-

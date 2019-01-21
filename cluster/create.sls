@@ -18,9 +18,21 @@ bootstrap-the-cluster:
      {% if cluster.sbd is defined %}
      - sbd: {{ cluster.sbd }}
      {% if cluster.sbd.device is defined %}
-     - sbd_device: {{ cluster.sbd.device }}
+     - sbd_dev: {{ cluster.sbd.device }}
      {% endif %}
      {% endif %}
+
+{% if cluster.configure is defined %}
+configure-the-cluster:
+  crm.cluster_configured:
+    - method: {{ cluster.configure.method }}
+    - url: {{ cluster.configure.url }}
+    {% if cluster.configure.is_xml is defined %}
+    - is_xml: {{ cluster.configure.is_xml }}
+    {% endif %}
+    - require:
+        - bootstrap-the-cluster
+{% endif %}
 
 hawk:
   service.running:
