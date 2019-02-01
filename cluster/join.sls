@@ -17,8 +17,8 @@ wait-for-total-initialization:
 join-the-cluster:
   crm.cluster_joined:
      - name: {{ cluster.init }}
-     {% if cluster.watchdog is defined %}
-     - watchdog: {{ cluster.watchdog }}
+     {% if cluster.watchdog.device is defined %}
+     - watchdog: {{ cluster.watchdog.device }}
      {% endif %}
      {% if cluster.interface is defined %}
      - interface: {{ cluster.interface }}

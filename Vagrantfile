@@ -59,6 +59,10 @@ def configure_minion(minion_config, idx, roles, memory, cpus)
     provider.graphics_port = 9200 + idx + 1
   end
 
+  minion_config.vm.provider :libvirt do |lv|
+    lv.storage :file, type: "raw", size: "100M", path: "sbd", allow_existing: true, shareable: true, cache: "none"
+  end
+
   minion_config.vm.provision :salt do |salt|
     salt.minion_id = "node#{idx}"
     salt.minion_config = "test/config/etc/minion"
@@ -72,9 +76,9 @@ def configure_minion(minion_config, idx, roles, memory, cpus)
 
   # Change hacluster user's shell from nologin to /bin/bash to avoid issues with bindfs
   minion_config.vm.provision "shell", inline: "chsh -s /bin/bash hacluster"
+  minion_config.vm.provision "shell", inline: "zypper rr systemsmanagement-salt"
 
 end
-
 
 Vagrant.configure("2") do |config|
 
