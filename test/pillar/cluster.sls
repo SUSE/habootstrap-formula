@@ -5,8 +5,6 @@ cluster:
   watchdog:
     module: softdog
     device: /dev/watchdog
-  sbd:
-    device: /dev/vdb
   ntp: pool.ntp.org
   sshkeys:
     overwrite: true

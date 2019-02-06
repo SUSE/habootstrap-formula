@@ -3,8 +3,10 @@
 bootstrap-the-cluster:
   crm.cluster_initialized:
      - name: {{ cluster.name }}
+     {% if cluster.watchdog is defined %}
      {% if cluster.watchdog.device is defined %}
      - watchdog: {{ cluster.watchdog.device }}
+     {% endif %}
      {% endif %}
      {% if cluster.interface is defined %}
      - interface: {{ cluster.interface }}
@@ -16,7 +18,7 @@ bootstrap-the-cluster:
      - admin_ip: {{ cluster.admin_ip }}
      {% endif %}
      {% if cluster.sbd is defined %}
-     - sbd: {{ cluster.sbd }}
+     - sbd: True
      {% if cluster.sbd.device is defined %}
      - sbd_dev: {{ cluster.sbd.device }}
      {% endif %}
@@ -25,7 +27,7 @@ bootstrap-the-cluster:
 {% if cluster.configure is defined %}
 {% set url = none %}
 {% if cluster.configure.template is defined %}
-{% set url = cluster.configure.template.destination or '/tmp/cluster.config' %}
+{% set url = cluster.configure.template.destination|default('/tmp/cluster.config') %}
 {{ url }}:
   file.managed:
     - source: {{ cluster.configure.template.source }}

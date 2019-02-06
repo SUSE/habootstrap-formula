@@ -1,17 +1,145 @@
 cluster:
-  $type: hidden-group
+  $name: Cluster
+  $type: namespace
 
   name:
     $name: Cluster name
     $default: hacluster
 
   init:
-    $placeholder: Minion which creates the cluster
-    
+    $name: First node
+    $help: Minion which creates the cluster
+    $optional: false
+
   unicast:
     $type: boolean
-    $default: False
+    $default: false
 
-  
+  interface:
+    $type: text
+    $default: wlan0
+    $optional: false
 
-  
+  ntp:
+    $type: text
+    $placeholder: pool.ntp.org
+    $optional: true
+
+  watchdog:
+    $name: Watchdog configuration
+    $optional: true
+    $type: group
+    module:
+      $name: Watchdog module to load
+      $type: text
+      $placeholder: softdog
+      $optional: true
+    device:
+      $name: Watchdog device
+      $type: text
+      $placeholder: /dev/watchdog
+      $optional: true
+
+  sbd:
+    $name: SBD configuration
+    $optional: true
+    $type: group
+    diskless_checkbox:
+      $name: Diskless SBD (If device is set this option is skipped)
+      $type: boolean
+      $default: false
+      $optional: true
+    device:
+      $name: SBD device url
+      $type: text
+      $placeholder: /dev/vdb
+      $optional: true
+
+  sshkeys:
+    $name: SSH keys configuration
+    $optional: true
+    $type: group
+    authorize_keys:
+      $name: Share SSH keys information
+      $type: boolean
+      $default: false
+      $optional: true
+    overwrite:
+      $visibleIf: .authorize_keys == true
+      $name: Overwrite current keys
+      $type: boolean
+      $default: false
+      $optional: true
+    password:
+      $visibleIf: .authorize_keys == true
+      $name: First node root password
+      $type: text
+      $optional: true
+
+  resource_agents:
+    $name: Resource agents to install
+    $optional: true
+    $type: edit-group
+    $itemName: ""
+    $minItems: 0
+    $prototype:
+      $name: New resource agent
+      $optional: true
+      $type: text
+
+  configure_checkbox:
+    $name: Configure resource agents with configuration file
+    $type: boolean
+    $default: false
+
+  configure:
+    $visibleIf: .configure_checkbox == true
+    $name: Resource agents and constraints configuration
+    $optional: true
+    $type: group
+    method:
+      $name: Method
+      $type: select
+      $values: [replace, update, push]
+      $default: update
+      $optional: true
+    is_xml:
+      $name: Configuration file is xml format
+      $type: boolean
+      $default: false
+      $optional: true
+    configure_url_checkbox:
+      $name: Use configuration file (template otherwise)
+      $type: boolean
+      $default: true
+      $optional: true
+    url:
+      $visibleIf: .configure_url_checkbox == true
+      $name: Configuration file url (if used template data is skipped)
+      $optional: true
+    template:
+      $visibleIf: .configure_url_checkbox == false
+      $name: Jinja configuration template
+      $optional: true
+      $type: namespace
+      source:
+        $name: Template file path
+        $optional: true
+        $type: text
+      destination:
+        $name: New configuration file destination path
+        $optional: true
+        $type: text
+      parameters:
+        $name: Template parameters
+        $optional: true
+        $type: edit-group
+        $itemName: ""
+        $prototype:
+          $name: New parameter
+          key:
+            $name: Parameter name
+            $optional: true
+          value:
+            $name: Parameter value
+            $optional: true

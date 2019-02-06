@@ -1,6 +1,6 @@
 {% from "cluster/map.jinja" import cluster with context %}
 {% set host = grains['host'] %}
-{% set password = cluster.sshkeys.password%}
+{% set password = cluster.sshkeys.password %}
 
 create_ssh_directory:
  file.directory:
@@ -11,7 +11,7 @@ create_ssh_directory:
 
 {% if cluster.init != host %}
 
-{% if cluster.sshkeys.overwrite is defined and  cluster.sshkeys.overwrite %}
+{% if cluster.sshkeys.overwrite is defined and cluster.sshkeys.overwrite is sameas true %}
 create_key:
   cmd.run:
     - name: yes y | sudo ssh-keygen -f /root/.ssh/id_rsa -C 'Initial key' -N ''
