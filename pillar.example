@@ -13,8 +13,10 @@ cluster:
   # from the cluster.
   # remove: []
 
-  # optional: Configure the watchdog device
-  # watchdog: /dev/watchdog
+  # optional: Configure the watchdog device. module and device are mandatory
+  # watchdog:
+  #   module: softdog
+  #   device: /dev/watchdog
 
   # optional: Network interface to use for cluster communication
   # interface: eth0
@@ -22,13 +24,44 @@ cluster:
   # optional: UDP instead of multicast
   # unicast: True
 
-  # optional: configure a virtual IP resource in cluster
+  # optional: Configure a virtual IP resource in cluster
   # admin_ip: 10.20.30.40
 
-  # optional: configure SBD
-  #sbd:
-  #  # optional: configure an SBD device
-  #  device: /dev/by-label/sbd-disk
+  # optional: Configure SBD
+  # sbd:
+  #   # optional: Configure an SBD device
+  #   device: /dev/by-label/sbd-disk
+
+  # optional: ntp server
+  # ntp: pool.ntp.org
+
+  # optional: Authorize ssh connection from nodes to willing to join
+  # ssheys:
+  #   # Overwrite current keys
+  #   overwrite: true
+  #   # First node root password
+  #   password: admin
+
+  # optional: Resource agents packages to install
+  # resource_agents:
+  #   - resouce_agent_pkg
+
+  # optional: Configure cluster resource agents and constraints
+  # configure:
+  #   method: update
+  #   # optional, url or template, one of them must be used
+  #   url: path_to_configfile
+  #   is_xml: False
+  #   # optional, jinja2 template can be used to create the configuration file.
+  #   template:
+  #     source: path_to_template
+  #     # optional
+  #     destination: path_to_destination_file
+  #     # optional: parameters to add in the template
+  #     # the template must start with to use them: {% set data = pillar.cluster.configure.template.parameters %}
+  #     parameters:
+  #       param1: value1
+  #       param2: value2
 
 
 # -*- mode: yaml -*-

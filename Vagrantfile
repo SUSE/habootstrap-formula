@@ -24,7 +24,8 @@ def configure_master(master_config, idx, roles, memory, cpus)
   master_config.vm.synced_folder "./cluster", "/srv/salt/cluster", type: 'rsync'
 
   # salt-master must be installed this way, as install_master option does not work properly for thi distro
-  master_config.vm.provision "shell", inline: "zypper --non-interactive --gpg-auto-import-keys ref;zypper --gpg-auto-import-keys in -y -l salt-master"
+  master_config.vm.provision "shell", inline: "zypper --non-interactive --gpg-auto-import-keys ref"
+  master_config.vm.provision "shell", inline: "zypper --gpg-auto-import-keys in -y --force-resolution -l salt-master; exit 0"
 
   master_config.vm.provision :salt do |salt|
     salt.master_config = "test/config/etc/master"
@@ -33,12 +34,12 @@ def configure_master(master_config, idx, roles, memory, cpus)
     # Add cluster nodes ssh public keys
     salt.seed_master = {
                         "node1" => "test/config/sshkeys/vagrant.pub",
-                        "node2" => "test/config/sshkeys/vagrant.pub"
+                        "node2" => "test/config/sshkeys/vagrant.pub",
+                        "node3" => "test/config/sshkeys/vagrant.pub"
                        }
 
     salt.install_type = "stable"
     salt.install_master = true
-    salt.no_minion = true
     salt.verbose = true
     salt.colorize = true
     salt.bootstrap_options = "-P -c /tmp"
@@ -72,9 +73,9 @@ def configure_minion(minion_config, idx, roles, memory, cpus)
 
   # Change hacluster user's shell from nologin to /bin/bash to avoid issues with bindfs
   minion_config.vm.provision "shell", inline: "chsh -s /bin/bash hacluster"
+  minion_config.vm.provision "shell", inline: "zypper rr systemsmanagement-salt"
 
 end
-
 
 Vagrant.configure("2") do |config|
 
