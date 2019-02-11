@@ -23,6 +23,9 @@ cluster:
 
   # optional: UDP instead of multicast
   # unicast: True
+  
+  # optional: Increase default timer before joining a cluster
+  # join_timer: 5
 
   # optional: Configure a virtual IP resource in cluster
   # admin_ip: 10.20.30.40
