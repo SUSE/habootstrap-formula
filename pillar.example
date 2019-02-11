@@ -24,7 +24,8 @@ cluster:
   # optional: UDP instead of multicast
   # unicast: True
   
-  # optional: Increase default timer before joining a cluster
+  # optional: Time in seconds between hawk service is available in the first
+  # node and join command is executed (5s by default)
   # join_timer: 5
 
   # optional: Configure a virtual IP resource in cluster
