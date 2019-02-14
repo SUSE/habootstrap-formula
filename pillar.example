@@ -36,6 +36,10 @@ cluster:
   #   # optional: Configure an SBD device
   #   device: /dev/by-label/sbd-disk
 
+  # optional: Install required packages to run the cluster (true by default)
+  # pre-configured packages sometimes exist for development purposes
+  # install_packages: true
+
   # optional: ntp server
   # ntp: pool.ntp.org
 

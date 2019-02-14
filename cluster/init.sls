@@ -3,7 +3,9 @@
 
 include:
   - .pre_validation
+{% if cluster.install_packages is sameas true %}
   - .packages
+{% endif %}
   - .resource_agents
 {% if cluster.ntp is defined %}
   - .ntp
