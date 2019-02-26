@@ -28,7 +28,7 @@ Summary:        HA cluster (crmsh) deployment salt formula
 
 License:        Apache-2.0
 Url:            https://github.com/SUSE/%{name}
-Source0:        %{name}-%{version}.tar.bz2
+Source0:        %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
 Requires:       salt-saphana
