@@ -25,5 +25,6 @@ jobs:
           -e FOLDER=$FOLDER \
           -e OBS_PROJECT=$OBS_PROJECT \
           -e PACKAGE_NAME=$PACKAGE_NAME \
+          -e TARGET_PROJECT=$TARGET_PROJECT \
           xarbulu/continuous_delivery \
           /bin/bash -c "cd /package;/upload.sh"
