@@ -21,9 +21,9 @@
 %define fdir  %{_datadir}/susemanager/formulas
 
 Name:           habootstrap-formula
-Version:        1.0.0+git.1550242845.0e69ab8
+Version:        0.1.0
 Group:          System/Packages
-Release:        0%{?dist}
+Release:        1
 Summary:        HA cluster (crmsh) deployment salt formula
 
 License:        Apache-2.0
@@ -52,7 +52,7 @@ HA Cluster Bootstrap Salt Formula for SUSE Manager. Used to configure a basic HA
 
 %install
 mkdir -p %{buildroot}/srv/salt/
-cp -R %{fname} %{buildroot}/srv/salt/%{fname}
+cp -R %{fname} %{buildroot}/srv/salt
 
 # SUMA Specific
 mkdir -p %{buildroot}%{fdir}/states/%{fname}
