@@ -26,7 +26,7 @@ jobs:
           -e OBS_PROJECT=$OBS_PROJECT \
           -e PACKAGE_NAME=$PACKAGE_NAME \
           shap/continuous_deliver \
-          /bin/bash -c "cd /package;/upload.sh"
+          /bin/bash -c "cd /package;/scripts/upload.sh"
 
     - stage: submit
       if: branch = master
