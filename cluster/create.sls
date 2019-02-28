@@ -39,7 +39,7 @@ bootstrap-the-cluster:
 
 configure-the-cluster:
   crm.cluster_configured:
-    - method: {{ cluster.configure.method }}
+    - name: {{ cluster.configure.method }}
     - url: {{ cluster.configure.url|default(url) }}
     {% if cluster.configure.is_xml is defined %}
     - is_xml: {{ cluster.configure.is_xml }}
