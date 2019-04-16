@@ -1,8 +1,8 @@
 {%- from "cluster/map.jinja" import cluster with context -%}
 
-ntp_packages:
-  pkg.installed:
-  - name: ntp
+{% if grains['osmajorrelease']|int == 12 %}
+ntp:
+  pkg.installed
 
 /etc/ntp.conf:
   file.append:
@@ -14,3 +14,19 @@ ntpd:
   - enable: True
   - watch:
     - file: /etc/ntp.conf
+
+{% else %} # SLES15
+chrony:
+  pkg.installed
+
+/etc/chrony.conf:
+  file.append:
+  - text:
+    - server {{ cluster.ntp }}
+
+chronyd:
+  service.running:
+  - enable: True
+  - watch:
+    - file:  /etc/chrony.conf
+{% endif %}
