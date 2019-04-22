@@ -6,6 +6,12 @@ using crmsh.
 Mainly adapted to SUSE / openSUSE Linux distributions, but should be
 usable on other distributions with minor modifications.
 
+# Requirements
+
+The habootstrap-formula package requires **salt-call 2018.3.0 (Oxygen)** or
+newer versions. This package is included in the **.spec** file, so it must
+be available in currently added package repositories.
+
 ## Usage
 
 To use, configure the cluster options using pillar data as described

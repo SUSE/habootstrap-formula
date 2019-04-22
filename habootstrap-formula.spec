@@ -32,6 +32,7 @@ Source0:        %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
 Requires:       salt-saphana
+Requires:       salt-minion >= 2018.3.0
 
 
 %description
