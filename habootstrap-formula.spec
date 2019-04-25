@@ -31,7 +31,7 @@ Url:            https://github.com/SUSE/%{name}
 Source0:        %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
-Requires:       salt-saphana
+Requires:       salt-shaptools
 
 
 %description
@@ -40,7 +40,7 @@ HA cluster (crmsh) deployment salt formula
 # package to deploy on SUMA specific path.
 %package suma
 Summary:        HA cluster (crmsh) deployment salt formula (SUMA specific)
-Requires:       salt-saphana
+Requires:       salt-shaptools
 
 %description suma
 HA Cluster Bootstrap Salt Formula for SUSE Manager. Used to configure a basic HA cluster.
