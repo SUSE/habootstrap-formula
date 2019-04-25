@@ -1,11 +1,11 @@
-add-saphana-repo:
+add-shap-factory-repo:
   pkgrepo.managed:
-    - name: saphana
-    - baseurl: https://download.opensuse.org/repositories/home:xarbulu:sap-deployment/SLE_12_SP4/
+    - name: shap-factory-repo
+    - baseurl: https://download.opensuse.org/repositories/network:/ha-clustering:/Factory/SLE_12_SP4/
     - gpgautoimport: True
 
-salt-saphana:
+salt-shaptools:
   pkg.installed:
-    - fromrepo: saphana
+    - fromrepo: shap-factory-repo
     - require:
-      - add-saphana-repo
+      - add-shap-factory-repo
