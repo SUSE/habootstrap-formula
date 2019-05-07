@@ -10,6 +10,9 @@
 patterns-ha-ha_sles:
   pkg.installed:
     - fromrepo: {{ repo }}
+    - retry:
+        attempts: 3
+        interval: 15
 
 {% else %}
 
