@@ -17,15 +17,16 @@ create_key:
     - name: yes y | sudo ssh-keygen -f /root/.ssh/id_rsa -C 'Initial key' -N ''
 {% endif %}
 
-sshpass:
-  pkg.installed
+cluster_sshpass:
+  pkg.installed:
+    - name: sshpass
 
 copy_ssh_pub:
   cmd.run:
     - name: sshpass -p '{{ password }}' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
             /root/.ssh/id_rsa.pub root@{{ cluster.init }}:/root/.ssh/{{ grains['host'] }}_id_rsa.pub
     - require:
-      - sshpass
+      - saphana_sshpass
 
 authorize_key:
   cmd.run:
