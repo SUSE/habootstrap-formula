@@ -17,26 +17,15 @@ create_key:
     - name: yes y | sudo ssh-keygen -f /root/.ssh/id_rsa -C 'Initial key' -N ''
 {% endif %}
 
-add_network_repo:
-  pkgrepo.managed:
-    - name: network
-    - baseurl: https://download.opensuse.org/repositories/network/SLE_12_SP3
-    - gpgautoimport: True
-
-install_sshpass:
-  pkg.installed:
-    - name: sshpass
-    - refresh: False
-    - fromrepo: network
-    - require:
-      - add_network_repo
+sshpass:
+  pkg.installed
 
 copy_ssh_pub:
   cmd.run:
     - name: sshpass -p '{{ password }}' scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
             /root/.ssh/id_rsa.pub root@{{ cluster.init }}:/root/.ssh/{{ grains['host'] }}_id_rsa.pub
     - require:
-      - install_sshpass
+      - sshpass
 
 authorize_key:
   cmd.run:
