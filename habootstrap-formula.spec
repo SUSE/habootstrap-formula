@@ -18,12 +18,12 @@
 
 # See also http://en.opensuse.org/openSUSE:Specfile_guidelines
 %define fname cluster
-%define fdir  %{_datadir}/susemanager/formulas
+%define fdir  %{_datadir}/salt-formulas
 
 Name:           habootstrap-formula
-Version:        0.1.0
+Version:        0.1.1
 Group:          System/Packages
-Release:        1
+Release:        0
 Summary:        HA cluster (crmsh) deployment salt formula
 
 License:        Apache-2.0
@@ -33,17 +33,15 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
 Requires:       salt-shaptools
 
+# On SLE/Leap 15-SP1 and TW requires the new salt-formula configuration location.
+%if ! (0%{?sle_version:1} && 0%{?sle_version} < 150100)
+Requires:       salt-formulas-configuration
+%endif
 
 %description
-HA cluster (crmsh) deployment salt formula
-
-# package to deploy on SUMA specific path.
-%package suma
-Summary:        HA cluster (crmsh) deployment salt formula (SUMA specific)
-Requires:       salt-shaptools
-
-%description suma
-HA Cluster Bootstrap Salt Formula for SUSE Manager. Used to configure a basic HA cluster.
+HA cluster salt deployment formula. This formula is capable to perform
+the HA cluster bootstrap actions (init, join, remove) using standalone salt
+or via SUSE Manager formulas with forms, available on SUSE Manager 4.0.
 
 %prep
 %setup -q
@@ -51,10 +49,16 @@ HA Cluster Bootstrap Salt Formula for SUSE Manager. Used to configure a basic HA
 %build
 
 %install
+
+# before SUMA 4.0/15-SP1, install on the standard Salt Location.
+%if 0%{?sle_version:1} && 0%{?sle_version} < 150100
+
 mkdir -p %{buildroot}/srv/salt/
 cp -R %{fname} %{buildroot}/srv/salt
 
-# SUMA Specific
+%else
+
+# On SUMA 4.0/15-SP1, a single shared directory will be used.
 mkdir -p %{buildroot}%{fdir}/states/%{fname}
 mkdir -p %{buildroot}%{fdir}/metadata/%{fname}
 cp -R %{fname} %{buildroot}%{fdir}/states
@@ -64,39 +68,34 @@ then
   cp -R metadata.yml %{buildroot}%{fdir}/metadata/%{fname}
 fi
 
+%endif
+
+%if 0%{?sle_version:1} && 0%{?sle_version} < 150100
+
 %files
 %defattr(-,root,root,-)
-# %license macro is not available on older releases
-%if 0%{?sle_version} <= 120300
-%doc LICENSE
-%else
 %license LICENSE
-%endif
 %doc README.md
 /srv/salt/%{fname}
 
 %dir %attr(0755, root, salt) /srv/salt
 
-
-%files suma
-%defattr(-,root,root,-)
-# %license macro is not available on older releases
-%if 0%{?sle_version} <= 120300
-%doc LICENSE
 %else
+
+%files
+%defattr(-,root,root,-)
 %license LICENSE
-%endif
 %doc README.md
-%dir %{_datadir}/susemanager
 %dir %{fdir}
 %dir %{fdir}/states
 %dir %{fdir}/metadata
 %{fdir}/states/%{fname}
 %{fdir}/metadata/%{fname}
 
-%dir %attr(0755, root, salt) %{_datadir}/susemanager
 %dir %attr(0755, root, salt) %{fdir}
 %dir %attr(0755, root, salt) %{fdir}/states
 %dir %attr(0755, root, salt) %{fdir}/metadata
+
+%endif
 
 %changelog
