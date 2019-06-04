@@ -21,7 +21,7 @@
 %define fdir  %{_datadir}/salt-formulas
 
 Name:           habootstrap-formula
-Version:        0.1.1
+Version:        0.2.0
 Group:          System/Packages
 Release:        0
 Summary:        HA cluster (crmsh) deployment salt formula
