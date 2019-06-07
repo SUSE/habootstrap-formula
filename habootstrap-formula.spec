@@ -74,8 +74,12 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%license LICENSE
+%if 0%{?sle_version} < 120300
+%doc README.md LICENSE
+%else
 %doc README.md
+%license LICENSE
+%endif
 /srv/salt/%{fname}
 
 %dir %attr(0755, root, salt) /srv/salt
@@ -84,8 +88,8 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%license LICENSE
 %doc README.md
+%license LICENSE
 %dir %{fdir}
 %dir %{fdir}/states
 %dir %{fdir}/metadata
