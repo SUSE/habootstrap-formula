@@ -10,7 +10,7 @@ wait-for-cluster:
 
 wait-for-total-initialization:
   cmd.run:
-    - name: 'sleep {{ cluster.join_timer|default(5) }}'
+    - name: 'sleep {{ cluster.join_timer|default(20) }}'
     - require:
       - wait-for-cluster
 

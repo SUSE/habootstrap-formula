@@ -101,3 +101,12 @@ To run the tests, `libvirt` must be installed and the daemon running:
 zypper in libvirt
 systemctl start libvirtd
 ```
+
+### Known issues
+* Failed to run [wait-for-total-initialization](./cluster/join.sls):
+
+> Note: The current solution is the query **hawk** status, can't exactly
+> represent the state of **pacemaker**. Increase the `join_timer` to
+> wait pacemaker may help in some cases.
+
+TODO: Replace to query **hawk** by checking **pacemaker** directly.
