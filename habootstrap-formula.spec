@@ -21,7 +21,7 @@
 %define fdir  %{_datadir}/salt-formulas
 
 Name:           habootstrap-formula
-Version:        0.2.1
+Version:        0.2.2
 Group:          System/Packages
 Release:        0
 Summary:        HA cluster (crmsh) deployment salt formula
@@ -35,7 +35,7 @@ Requires:       salt-shaptools
 
 # On SLE/Leap 15-SP1 and TW requires the new salt-formula configuration location.
 %if ! (0%{?sle_version:1} && 0%{?sle_version} < 150100)
-Requires:       salt-formulas-configuration
+Requires:       salt-standalone-formulas-configuration
 %endif
 
 %description
@@ -96,9 +96,9 @@ fi
 %{fdir}/states/%{fname}
 %{fdir}/metadata/%{fname}
 
-%dir %attr(0755, root, salt) %{fdir}
-%dir %attr(0755, root, salt) %{fdir}/states
-%dir %attr(0755, root, salt) %{fdir}/metadata
+%dir %attr(0750, root, salt) %{fdir}
+%dir %attr(0750, root, salt) %{fdir}/states
+%dir %attr(0750, root, salt) %{fdir}/metadata
 
 %endif
 
