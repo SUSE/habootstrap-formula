@@ -7,5 +7,8 @@ add-shap-factory-repo:
 salt-shaptools:
   pkg.installed:
     - fromrepo: shap-factory-repo
+    - retry:
+        attempts: 3
+        interval: 15
     - require:
       - add-shap-factory-repo

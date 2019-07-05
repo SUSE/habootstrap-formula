@@ -18,6 +18,9 @@ patterns-ha-ha_sles:
 
 install_cluster_packages:
   pkg.installed:
+    - retry:
+        attempts: 3
+        interval: 15
     - pkgs:
       - crmsh
       - ha-cluster-bootstrap
