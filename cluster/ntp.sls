@@ -2,7 +2,10 @@
 
 {% if grains['osmajorrelease']|int == 12 %}
 ntp:
-  pkg.installed
+  pkg.installed:
+  - retry:
+        attempts: 3
+        interval: 15
 
 /etc/ntp.conf:
   file.append:
@@ -17,8 +20,11 @@ ntpd:
 
 {% else %} # SLES15
 chrony:
-  pkg.installed
-
+  pkg.installed:
+  - retry:
+        attempts: 3
+        interval: 15
+ 
 /etc/chrony.conf:
   file.append:
   - text:
