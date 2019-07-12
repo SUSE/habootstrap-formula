@@ -86,3 +86,20 @@ id: travis
 EOF
 
 sudo salt-call state.show_highstate --local --file-root=./ --config-dir=. --pillar-root=test/pillar --retcode-passthrough -l debug
+
+echo
+echo "==========================================="
+echo " Using third host - Running remove      "
+echo "==========================================="
+
+generate_cluster_pillar "init: 'hana01'"
+cat >grains <<EOF
+host: hana03
+EOF
+
+cat >minion <<EOF
+root_dir: $PWD
+id: travis
+EOF
+
+sudo salt-call state.show_highstate --local --file-root=./ --config-dir=. --pillar-root=test/pillar --retcode-passthrough -l debug
