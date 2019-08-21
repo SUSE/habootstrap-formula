@@ -27,3 +27,6 @@ include:
 {% else %}
   - .join
 {% endif %}
+{% if cluster.ha_exporter is defined %}
+  - .monitoring
+{% endif %}
