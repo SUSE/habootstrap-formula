@@ -7,7 +7,7 @@
 {% set pattern_available = salt['cmd.retcode']('zypper search patterns-ha-ha_sles') %}
 {% endif %}
 
-{% if pattern_available == 0 and cluster.ha_repo is not defined %}
+{% if pattern_available == 0 %}
 {% set repo = salt['pkg.info_available']('patterns-ha-ha_sles')['patterns-ha-ha_sles']['repository'] %}
 patterns-ha-ha_sles:
   pkg.installed:
@@ -20,26 +20,22 @@ patterns-ha-ha_sles:
 
 install_cluster_packages:
   pkg.installed:
-    {% if cluster.ha_repo is defined %}
-    - fromrepo: {{ cluster.ha_repo }}
-    {% endif %}
     - retry:
         attempts: 3
         interval: 15
-    - refresh: True
     - pkgs:
-        - corosync
-        - crmsh
-        - csync2
-        - drbd
-        - drbd-utils
-        - fence-agents
-        - ha-cluster-bootstrap
-        - hawk2
-        - hawk-apiserver
-        - pacemaker
-        - resource-agents
-        - sbd
+      - corosync
+      - crmsh
+      - csync2
+      - drbd
+      - drbd-utils
+      - fence-agents
+      - ha-cluster-bootstrap
+      - hawk2
+      - hawk-apiserver
+      - pacemaker
+      - resource-agents
+      - sbd
 
 {% endif %}
 
