@@ -1,5 +1,6 @@
 [Unit]
 Description=hawk-apiserver exporter daemon
+Wants=hawk.service
 After=network.target
 
 [Service]
