@@ -5,6 +5,8 @@ After=network.target hawk.service
 
 [Service]
 Type=simple
+User=hacluster
+Group=haclient
 WorkingDirectory=/usr/share/hawk-apiserver
 Restart=always
 RestartSec=5
