@@ -6,7 +6,7 @@
     - makedirs: True
 
 
-/etc/systemd/system/hawk_apiserver.service:
+/etc/systemd/system/hawk-apiserver.service:
   file.managed:
     - source: salt://cluster/templates/hawk_apiserver.service
     - user: root
@@ -14,3 +14,7 @@
     - mode: 644
     - require:
         - file: /usr/share/hawk-apiserver/json.config
+
+hawk-apiserver:
+  service.running:
+    - enable: True
