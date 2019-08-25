@@ -1,0 +1,21 @@
+[Unit]
+Description=hawk-apiserver exporter daemon
+Wants=hawk.service
+After=network.target hawk.service
+
+[Service]
+Type=simple
+User=hacluster
+Group=haclient
+WorkingDirectory=/usr/share/hawk-apiserver
+Restart=always
+RestartSec=5
+
+# Run ExecStartPre with root-permissions
+PermissionsStartOnly=true
+ExecStartPre=/usr/share/hawk/bin/generate-ssl-cert
+ExecStart=/usr/sbin/hawk-apiserver -config /usr/share/hawk-apiserver/json.config
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

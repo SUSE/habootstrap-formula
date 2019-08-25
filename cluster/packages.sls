@@ -1,5 +1,7 @@
 #required packages to install HA cluster
 
+{%- from "cluster/map.jinja" import cluster with context -%}
+
 {% set pattern_available = 1 %}
 {% if grains['os_family'] == 'Suse' %}
 {% set pattern_available = salt['cmd.retcode']('zypper search patterns-ha-ha_sles') %}
@@ -22,8 +24,18 @@ install_cluster_packages:
         attempts: 3
         interval: 15
     - pkgs:
+      - corosync
       - crmsh
+      - csync2
+      - drbd
+      - drbd-utils
+      - fence-agents
       - ha-cluster-bootstrap
       - hawk2
+      - hawk-apiserver
+      - pacemaker
+      - resource-agents
+      - sbd
 
 {% endif %}
+
