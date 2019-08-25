@@ -4,7 +4,7 @@
   "key": "/etc/hawk/hawk.key",
   "cert": "/etc/hawk/hawk.pem",
   "listen": "0.0.0.0",
-  "port": {{ cluster.exporter.exposition_port|default(9001) }},
+  "port": {{ cluster.ha_exporter.exposition_port|default(9001) }},
   "loglevel": "info",
   "route": [
     {
