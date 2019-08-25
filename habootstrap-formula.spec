@@ -22,7 +22,7 @@
 %define ftemplates templates
 
 Name:           habootstrap-formula
-Version:        0.2.5
+Version:        0.2.6
 Group:          System/Packages
 Release:        0
 Summary:        HA cluster (crmsh) deployment salt formula
