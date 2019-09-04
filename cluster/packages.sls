@@ -8,6 +8,7 @@
 {% endif %}
 
 {% if pattern_available == 0 %}
+# refresh is disabled to avoid errors during the call
 {% set repo = salt['pkg.info_available']('patterns-ha-ha_sles', refresh=False)['patterns-ha-ha_sles']['repository'] %}
 patterns-ha-ha_sles:
   pkg.installed:

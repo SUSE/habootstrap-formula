@@ -3,7 +3,7 @@ Wed Sep  4 07:04:48 UTC 2019 - Xabier Arbulu Insausti <xarbulu@suse.com>
 
 - Update the pkg.info_available call to avoid repositories refresh as
   it may cause errors
-- Add packages and ha_exporter options  to the SUMA form.yml file 
+- Add packages and ha_exporter options to the SUMA form.yml file 
 
 -------------------------------------------------------------------
 Sun Aug 25 17:58:31 UTC 2019 - Ayoub Belarbi <abelarbi@suse.de>
@@ -103,4 +103,3 @@ Thu Sep 06 13:25:22 UTC 2018 - kgronlund@suse.com
 Thu Sep  6 12:37:13 UTC 2018 - kgronlund@suse.com
 
 - Initial version
-
