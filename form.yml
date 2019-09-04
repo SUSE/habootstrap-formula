@@ -2,9 +2,16 @@ cluster:
   $name: Cluster
   $type: namespace
 
+  install_packages:
+    $name: Install required packages
+    $type: boolean
+    $default: true
+    $help: Install all required packages from currently existing repositories
+
   name:
     $name: Cluster name
     $default: hacluster
+    $optional: false
 
   init:
     $name: First node
@@ -18,7 +25,11 @@ cluster:
   interface:
     $type: text
     $default: wlan0
-    $optional: false
+    $optional: true
+
+  admin_ip:
+    $type: text
+    $optional: true
 
   ntp:
     $type: text
@@ -143,3 +154,18 @@ cluster:
           value:
             $name: Parameter value
             $optional: true
+
+  add_exporter:
+    $name: Add HA cluster metrics exporter
+    $type: boolean
+    $default: false
+    $help: Mark if you want add the HA cluster metrics exporter
+  ha_exporter:
+    $name: HA cluster metrics exporter
+    $optional: true
+    $visibleIf: .add_exporter == true
+    $type: group
+    exposition_port:
+      $name: HA cluster exporter (hawk-apiserver) exposition port
+      $type: text
+      $optional: true
