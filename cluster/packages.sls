@@ -8,7 +8,7 @@
 {% endif %}
 
 {% if pattern_available == 0 %}
-{% set repo = salt['pkg.info_available']('patterns-ha-ha_sles')['patterns-ha-ha_sles']['repository'] %}
+{% set repo = salt['pkg.info_available']('patterns-ha-ha_sles', refresh=False)['patterns-ha-ha_sles']['repository'] %}
 patterns-ha-ha_sles:
   pkg.installed:
     - fromrepo: {{ repo }}
@@ -38,4 +38,3 @@ install_cluster_packages:
       - sbd
 
 {% endif %}
-
