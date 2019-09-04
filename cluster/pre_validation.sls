@@ -14,3 +14,9 @@
     {% endif %}
   {% endif %}
 {% endif %}
+
+{# Check HA exporter #}
+{% if cluster.add_exporter is defined and cluster.add_exporter == false %}
+  {% do cluster.pop('ha_exporter') %}
+{% endif %}
+{# Check HA exporter finish #}
