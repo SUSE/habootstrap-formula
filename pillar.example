@@ -40,15 +40,11 @@ cluster:
   # pre-configured packages sometimes exist for development purposes
   # install_packages: true
 
-  # optional: Install HA packages from a specific repo
-  # ha_repo: https://download.opensuse.org/repositories/network:/ha-clustering:/Factory/SLE_15
-
-  # optional: Add and configure HA exporter (hawk-apiserver) to the instance
-  ha_exporter:
-      exposition_port: 9001 # Optional, 9001 by default
-
   # optional: ntp server
   # ntp: pool.ntp.org
+
+  # optional: enable ha_exporter by default disabled
+  ha_exporter: true
 
   # optional: Authorize ssh connection from nodes to willing to join
   # ssheys:

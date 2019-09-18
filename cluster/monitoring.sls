@@ -1,20 +1,11 @@
-/usr/share/hawk-apiserver/json.config:
-  file.managed:
-    - source: salt://cluster/templates/hawk_apiserver_json_config.j2
-    - template: jinja
-    - mode: 644
-    - makedirs: True
+prometheus_ha_cluster_exporter:
+  pkg.installed:
+    - name: prometheus-ha_cluster_exporter
 
-
-/etc/systemd/system/hawk-apiserver.service:
-  file.managed:
-    - source: salt://cluster/templates/hawk_apiserver.service
-    - user: root
-    - group: root
-    - mode: 644
-    - require:
-        - file: /usr/share/hawk-apiserver/json.config
-
-hawk-apiserver:
+ha_cluster_exporter_service:
   service.running:
+    - name: prometheus-ha_cluster_exporter
     - enable: True
+    - restart: True
+    - require:
+      - pkg: prometheus_ha_cluster_exporter
