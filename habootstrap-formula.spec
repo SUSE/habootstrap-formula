@@ -19,10 +19,9 @@
 # See also http://en.opensuse.org/openSUSE:Specfile_guidelines
 %define fname cluster
 %define fdir  %{_datadir}/salt-formulas
-%define ftemplates templates
 
 Name:           habootstrap-formula
-Version:        0.2.6
+Version:        0.2.7
 Group:          System/Packages
 Release:        0
 Summary:        HA cluster (crmsh) deployment salt formula
@@ -33,7 +32,6 @@ Source0:        %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
 Requires:       salt-shaptools
-Suggests:       hawk-apiserver >= 0.0.3
 
 # On SLE/Leap 15-SP1 and TW requires the new salt-formula configuration location.
 %if ! (0%{?sle_version:1} && 0%{?sle_version} < 150100)
@@ -57,7 +55,6 @@ or via SUSE Manager formulas with forms, available on SUSE Manager 4.0.
 
 mkdir -p %{buildroot}/srv/salt/
 cp -R %{fname} %{buildroot}/srv/salt
-cp -R %{ftemplates} %{buildroot}/srv/salt/%{fname}/
 
 %else
 
@@ -65,7 +62,6 @@ cp -R %{ftemplates} %{buildroot}/srv/salt/%{fname}/
 mkdir -p %{buildroot}%{fdir}/states/%{fname}
 mkdir -p %{buildroot}%{fdir}/metadata/%{fname}
 cp -R %{fname} %{buildroot}%{fdir}/states
-cp -R %{ftemplates} %{buildroot}%{fdir}/states/%{fname}
 cp -R form.yml %{buildroot}%{fdir}/metadata/%{fname}
 if [ -f metadata.yml ]
 then
@@ -85,7 +81,6 @@ fi
 %license LICENSE
 %endif
 /srv/salt/%{fname}
-/srv/salt/%{fname}/%{ftemplates}
 
 %dir %attr(0755, root, salt) /srv/salt
 
@@ -99,7 +94,6 @@ fi
 %dir %{fdir}/states
 %dir %{fdir}/metadata
 %{fdir}/states/%{fname}
-%{fdir}/states/%{fname}/%{ftemplates}
 %{fdir}/metadata/%{fname}
 
 %dir %attr(-, root, root) %{fdir}
