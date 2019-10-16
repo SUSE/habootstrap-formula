@@ -6,11 +6,11 @@ wait-for-cluster:
     - request_interval: 5
     - status: 200
     - verify_ssl: false
-    - wait_for: 60
+    - wait_for: {{ cluster.join_timeout }}
 
 wait-for-total-initialization:
   cmd.run:
-    - name: 'sleep {{ cluster.join_timer|default(20) }}'
+    - name: 'sleep {{ cluster.join_timer }}'
     - require:
       - wait-for-cluster
 
