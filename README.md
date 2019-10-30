@@ -107,6 +107,6 @@ systemctl start libvirtd
 
 > Note: The current solution is to query **hawk** status. This doesn't exactly
 > represent the state of **pacemaker** (hawk initialization is independent).
-> Increasing the `join_timer` to wait pacemaker may help in some cases.
+> Increasing the `wait_for_initialization` to wait pacemaker may help in some cases.
 
 TODO: Replace to query **hawk** by checking **pacemaker** directly.
