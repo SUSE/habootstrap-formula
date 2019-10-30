@@ -2,4 +2,4 @@ cluster:
   name: hacluster
   install_packages: true
   join_timeout: 60
-  join_timer: 20
+  wait_for_initialization: 20
