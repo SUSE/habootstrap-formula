@@ -39,3 +39,14 @@ install_cluster_packages:
       - sbd
 
 {% endif %}
+
+{% if grains['provider'] == "azure" %}
+# Install socat utility on Azure platform (to replace netcat)
+install_additional_packages_azure:
+  pkg.installed:
+    - retry:
+        attempts: 3
+        interval: 15
+    - pkgs:
+      - socat
+{% endif %}
