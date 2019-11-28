@@ -1,7 +1,7 @@
 #required packages to install HA cluster
 
 {%- from "cluster/map.jinja" import cluster with context -%}
-{% set provider = pillar.cluster.configure.template.parameters.platform %}
+{% set provider = cluster.configure.template.parameters.platform|default('libvirt') %}
 
 {% set pattern_available = 1 %}
 {% if grains['os_family'] == 'Suse' %}
