@@ -61,7 +61,6 @@ echo "==========================================="
 
 cat >grains <<EOF
 host: hana01
-provider: azure
 EOF
 
 cat >minion <<EOF
@@ -79,7 +78,6 @@ echo "==========================================="
 generate_cluster_pillar "init: 'hana01'"
 cat >grains <<EOF
 host: hana02
-provider: azure
 EOF
 
 cat >minion <<EOF
@@ -97,7 +95,6 @@ echo "==========================================="
 generate_cluster_pillar "init: 'hana01'"
 cat >grains <<EOF
 host: hana03
-provider: azure
 EOF
 
 cat >minion <<EOF
