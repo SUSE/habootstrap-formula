@@ -48,4 +48,3 @@ install_additional_packages_azure:
         interval: 15
     - pkgs:
       - socat
-{% endif %}
