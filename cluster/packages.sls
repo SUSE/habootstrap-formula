@@ -1,7 +1,6 @@
 #required packages to install HA cluster
 
 {%- from "cluster/map.jinja" import cluster with context -%}
-{% set provider = cluster.configure.template.parameters.platform|default('libvirt') %}
 
 {% set pattern_available = 1 %}
 {% if grains['os_family'] == 'Suse' %}
@@ -41,8 +40,7 @@ install_cluster_packages:
 
 {% endif %}
 
-{% if provider == "azure" %}
-# Install socat utility on Azure platform (to replace netcat)
+# socat utility required only for Azure platform 
 install_additional_packages_azure:
   pkg.installed:
     - retry:
