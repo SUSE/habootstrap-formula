@@ -39,3 +39,12 @@ install_cluster_packages:
       - sbd
 
 {% endif %}
+
+# socat utility required only for Azure platform 
+install_additional_packages_azure:
+  pkg.installed:
+    - retry:
+        attempts: 3
+        interval: 15
+    - pkgs:
+      - socat
