@@ -38,6 +38,10 @@ cluster:
   # sbd:
   #   # optional: Configure an SBD device
   #   device: /dev/by-label/sbd-disk
+  #   # multiple disks can be set using a list
+  #   device:
+  #      - /dev/by-label/sbd-disk1
+  #      - /dev/by-label/sbd-disk2
 
   # optional: Install required packages to run the cluster (true by default)
   # pre-configured packages sometimes exist for development purposes
