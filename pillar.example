@@ -49,12 +49,18 @@ cluster:
   # optional: enable ha_exporter by default disabled
   ha_exporter: true
 
-  # optional: Authorize ssh connection from nodes to willing to join
+  # optional: Manage ssh keys usage
+  # If this entry is not set, the formula expects that the sshkeys exist and are authorized among the nodes
+  # Use cases:
+  # 1. ssh keys already exist and nodes are authorized to ssh each other. Don't set this entry
+  # 2. ssh keys already exist but you want to overwrite them with random new keys, set overwrite to true
+  # 3. ssh keys don't exist and you have the 1st node password. Use this example
+  # 4. If ssh keys don't exist and you don't want to set the password here, the cluster cannot be created!
   # ssheys:
-  #   # Overwrite current keys
-  #   overwrite: true
-  #   # First node root password
-  #   password: admin
+  #   # Overwrite current keys (new keys are created if no keys are found)
+  #   overwrite: true # false by default
+  #   # First node root password. This entry is used to configure the authorized_keys file from the joining nodes
+  #   password: admin # not set by default
 
   # optional: Resource agents packages to install
   # resource_agents:

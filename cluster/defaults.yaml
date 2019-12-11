@@ -3,3 +3,5 @@ cluster:
   install_packages: true
   join_timeout: 60
   wait_for_initialization: 20
+  sshkeys:
+    overwrite: false

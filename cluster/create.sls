@@ -23,6 +23,7 @@ bootstrap-the-cluster:
      - sbd_dev: {{ cluster.sbd.device }}
      {% endif %}
      {% endif %}
+     - no_overwrite_sshkey: {{ not cluster.sshkeys.overwrite }}
 
 {% if cluster.configure is defined %}
 {% set url = none %}
