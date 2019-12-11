@@ -49,6 +49,9 @@ cluster:
   # optional: enable ha_exporter by default disabled
   ha_exporter: true
 
+  # optional: update hacluster password
+  hacluster_password: mypassword
+
   # optional: Authorize ssh connection from nodes to willing to join
   # ssheys:
   #   # Overwrite current keys
