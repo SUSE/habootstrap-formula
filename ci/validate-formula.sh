@@ -23,6 +23,7 @@ function generate_cluster_pillar {
       password: linux
     resource_agents:
       - SAPHanaSR
+    hacluster_password: mypassword
     configure:
       method: update
       template:
@@ -70,7 +71,7 @@ EOF
 
 sudo salt-call state.show_highstate --local --file-root=./ --config-dir=. --pillar-root=test/pillar  --retcode-passthrough -l debug
 
-echo 
+echo
 echo "==========================================="
 echo " Using secondary host - Running join       "
 echo "==========================================="

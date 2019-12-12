@@ -30,6 +30,9 @@ include:
 {% if host not in cluster.remove %}
   - .configure_resources
 {% endif %}
+{% if cluster.hacluster_password is defined %}
+  - .hacluster_user
+{% endif %}
 {% if cluster.ha_exporter is sameas true %}
   - .monitoring
 {% endif %}
