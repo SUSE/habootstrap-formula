@@ -1,9 +1,14 @@
 -------------------------------------------------------------------
+Wed Dec 11 15:55:33 UTC 2019 - Xabier Arbulu <xarbulu@suse.com>
+
+- Add option to set multiple sbd disks to the cluster 
+
+-------------------------------------------------------------------
 Wed Dec 11 12:13:43 UTC 2019 - Xabier Arbulu <xarbulu@suse.com>
 
 - Move the cluster configure part to a new state to be executed
   even when joining executions.
-  
+
 -------------------------------------------------------------------
 Wed Dec 11 09:46:41 UTC 2019 - Xabier Arbulu <xarbulu@suse.com>
 

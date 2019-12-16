@@ -20,7 +20,7 @@ bootstrap-the-cluster:
      {% if cluster.sbd is defined %}
      - sbd: True
      {% if cluster.sbd.device is defined %}
-     - sbd_dev: {{ cluster.sbd.device }}
+     - sbd_dev: {{ cluster.sbd.device|json }}
      {% endif %}
      {% endif %}
 
