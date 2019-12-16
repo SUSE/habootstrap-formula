@@ -40,7 +40,7 @@ install_cluster_packages:
 
 {% endif %}
 
-{% if cluster.cloud_provider == 'microsoft-azure' %}
+{% if grains['cloud_provider'] == 'microsoft-azure' %}
 install_additional_packages_azure:
   pkg.installed:
     - retry:
