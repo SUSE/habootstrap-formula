@@ -3,7 +3,7 @@
 
 {% import_yaml "cluster/defaults.yaml" as defaults %}
 {% set cluster = salt['pillar.get']('cluster', default=defaults.cluster, merge=True) %}
-{% do cluster.update({'cloud_provider': salt['crmshmod.detect_cloud']()}) %}
+{% do cluster.update({'cloud_provider': salt['crm.detect_cloud']()}) %}
 
 {% if cluster.configure_checkbox is defined and cluster.configure_checkbox is sameas false %}
   {% do cluster.pop('configure', none) %}
