@@ -40,7 +40,7 @@ install_cluster_packages:
 
 {% endif %}
 
-# socat utility required only for Azure platform 
+{% if cluster.cloud_provider == 'microsoft-azure' %}
 install_additional_packages_azure:
   pkg.installed:
     - retry:
@@ -48,3 +48,4 @@ install_additional_packages_azure:
         interval: 15
     - pkgs:
       - socat
+{% endif %}
