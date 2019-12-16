@@ -22,10 +22,13 @@ include:
 {% endif %}
 {% if cluster.init == host %}
   - .create
-{% elif cluster.remove is defined and host in cluster.remove %}
+{% elif host in cluster.remove %}
   - .remove
 {% else %}
   - .join
+{% endif %}
+{% if host not in cluster.remove %}
+  - .configure_resources
 {% endif %}
 {% if cluster.hacluster_password is defined %}
   - .hacluster_user
