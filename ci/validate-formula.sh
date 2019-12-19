@@ -69,7 +69,7 @@ root_dir: $PWD
 id: travis
 EOF
 
-sudo salt-call state.show_highstate --local --file-root=./ --config-dir=. --pillar-root=test/pillar  --retcode-passthrough -l debug
+sudo salt-call state.show_highstate --local --file-root=./ --config-dir=. --pillar-root=test/pillar --module-dirs=ci/_modules --retcode-passthrough -l debug
 
 echo
 echo "==========================================="
@@ -86,7 +86,7 @@ root_dir: $PWD
 id: travis
 EOF
 
-sudo salt-call state.show_highstate --local --file-root=./ --config-dir=. --pillar-root=test/pillar --retcode-passthrough -l debug
+sudo salt-call state.show_highstate --local --file-root=./ --config-dir=. --pillar-root=test/pillar --module-dirs=ci/_modules --retcode-passthrough -l debug
 
 echo
 echo "==========================================="
@@ -103,4 +103,4 @@ root_dir: $PWD
 id: travis
 EOF
 
-sudo salt-call state.show_highstate --local --file-root=./ --config-dir=. --pillar-root=test/pillar --retcode-passthrough -l debug
+sudo salt-call state.show_highstate --local --file-root=./ --config-dir=. --pillar-root=test/pillar --module-dirs=ci/_modules --retcode-passthrough -l debug
