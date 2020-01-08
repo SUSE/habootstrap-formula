@@ -5,3 +5,4 @@ cluster:
   wait_for_initialization: 20
   sshkeys:
     overwrite: false
+  remove: []
