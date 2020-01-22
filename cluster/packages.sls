@@ -48,4 +48,15 @@ install_additional_packages_azure:
         interval: 15
     - pkgs:
       - socat
+{% elif grains['cloud_provider'] == 'google-cloud-platform' %}
+{%- set python_version = 'python' if grains['pythonversion'][0] == 2 else 'python3' %}
+install_additional_packages_gcp:
+  pkg.installed:
+    - retry:
+        attempts: 3
+        interval: 15
+    - pkgs:
+      - {{ python_version }}-google-api-python-client
+      - {{ python_version }}-oauth2client-gce
+    - resolve_capabilities: true
 {% endif %}
