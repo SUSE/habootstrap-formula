@@ -11,11 +11,7 @@ include:
 {% if cluster.ntp is defined %}
   - .ntp
 {% endif %}
-{% if cluster.sshkeys is defined  %}
-{% if cluster.sshkeys.password is defined %}
   - .sshkeys
-{% endif %}
-{% endif %}
 {% if cluster.watchdog is defined %}
 {% if cluster.watchdog.module is defined %}
   - .watchdog
