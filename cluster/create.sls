@@ -23,6 +23,7 @@ bootstrap-the-cluster:
      - sbd_dev: {{ cluster.sbd.device|json }}
      {% endif %}
      {% endif %}
+     - no_overwrite_sshkey: {{ not cluster.sshkeys.overwrite }}
 
 hawk:
   service.running:
