@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Mar  5 10:29:22 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
+
+- Version bump 0.3.1
+  * Add new option to configure corosync configuration file 
+
+-------------------------------------------------------------------
 Mon Feb  3 08:58:55 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
 
 - Version bump 0.3.0
