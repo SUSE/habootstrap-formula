@@ -1,8 +1,14 @@
 -------------------------------------------------------------------
-Thu Mar  5 10:29:22 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
+  Thu Mar  5 10:29:22 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
+
+- Version bump 0.3.2
+  * Add new option to configure corosync configuration file
+
+-------------------------------------------------------------------
+Tue Mar  3 09:51:10 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
 
 - Version bump 0.3.1
-  * Add new option to configure corosync configuration file 
+  * Add the required packages to use gcp specific agents
 
 -------------------------------------------------------------------
 Mon Feb  3 08:58:55 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
@@ -14,6 +20,7 @@ Mon Feb  3 08:58:55 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
   * Move the cluster configure part to a new state to be executed
     even when joining executions
   * Add option to update hacluster user password
+  (bsc#1165156, jsc#SLE-4031, boo#1137989)
 
 -------------------------------------------------------------------
 Thu Nov 28 19:17:37 UTC 2019 - Simranpal Singh <simranpal.singh@suse.com>
