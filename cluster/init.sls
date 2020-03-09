@@ -24,6 +24,9 @@ include:
 {% else %}
   - .join
 {% endif %}
+{% if cluster.corosync is defined %}
+  - .corosync
+{% endif %}
 {% if host not in cluster.remove %}
   - .configure_resources
 {% endif %}
