@@ -1,8 +1,16 @@
 -------------------------------------------------------------------
+Fri Apr 17 08:10:24 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
+
+- Version bump 0.3.4
+  * Autodetect GCP instance name and add it to the grains file
+  * Install the correct packages for the GCP resources
+  (bsc#1161898, bsc#1160933)
+
+-------------------------------------------------------------------
 Fri Mar 27 11:13:04 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
 
 - Version bump 0.3.3
-  * Autodetect GCP instance id and add it to the grains file 
+  * Autodetect GCP instance id and add it to the grains file
 
 -------------------------------------------------------------------
   Thu Mar  5 10:29:22 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
