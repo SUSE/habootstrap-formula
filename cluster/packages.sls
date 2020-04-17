@@ -57,7 +57,8 @@ install_additional_packages_gcp:
         interval: 15
     - pkgs:
       - {{ python_version }}-google-api-python-client # Needed by gcp-vpc-move-route and fence_gce
-      - {{ python_version }}-oauth2client-gce # Needed by gcp-vpc-move-route and fence_gce
+      - {{ python_version }}-google-auth
+      - {{ python_version }}-google-auth-httplib2
       - {{ python_version }}-pyroute2 # Needed by gcp-vpc-move-route
     - resolve_capabilities: true
 {% endif %}
