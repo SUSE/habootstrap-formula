@@ -50,8 +50,8 @@ cluster:
   # optional: ntp server
   # ntp: pool.ntp.org
 
-  # optional: enable ha_exporter by default disabled
-  # ha_exporter: true
+  # optional: enables monitoring via the Prometheus exporter
+  monitoring_enabled: true
 
   # optional: corosync configuration. If the entry is not set the values set by crmsh will be used
   # To configure the values, just create a dictionary with the values that have to be changed
