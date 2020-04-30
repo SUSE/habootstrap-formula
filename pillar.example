@@ -50,7 +50,8 @@ cluster:
   # optional: ntp server
   # ntp: pool.ntp.org
 
-  # optional: enables monitoring via the Prometheus exporter
+  # optional: enables monitoring via ha_cluster_exporter (disabled by default)
+  # the exporter will be installed and configured in all the nodes
   monitoring_enabled: true
 
   # optional: corosync configuration. If the entry is not set the values set by crmsh will be used
