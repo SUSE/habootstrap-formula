@@ -33,6 +33,6 @@ include:
 {% if cluster.hacluster_password is defined %}
   - .hacluster_user
 {% endif %}
-{% if cluster.montoring_enabled %}
+{% if cluster.monitoring_enabled %}
   - .monitoring
 {% endif %}
