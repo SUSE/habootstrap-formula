@@ -6,3 +6,4 @@ cluster:
   sshkeys:
     overwrite: false
   remove: []
+  monitoring_enabled: false

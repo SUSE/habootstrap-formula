@@ -50,8 +50,9 @@ cluster:
   # optional: ntp server
   # ntp: pool.ntp.org
 
-  # optional: enable ha_exporter by default disabled
-  # ha_exporter: true
+  # optional: enables monitoring via ha_cluster_exporter (disabled by default)
+  # the exporter will be installed and configured in all the nodes
+  monitoring_enabled: true
 
   # optional: corosync configuration. If the entry is not set the values set by crmsh will be used
   # To configure the values, just create a dictionary with the values that have to be changed
