@@ -89,10 +89,23 @@ cluster:
 
   # optional: Configure cluster resource agents and constraints
   # configure:
-  #   method: update
-  #   # optional, url or template, one of them must be used
+  #   # optional, configure cluster properties and defaults. Find more information running man pacemaker-schedulerd
+  #   # add key/value entries for each specific configuration set
+  #   properties:
+  #     stonith-timeout: 144s
+  #     stonith-enabled: true
+  #   rsc_defaults:
+  #     resource-stickiness: 1000
+  #     migration-threshold: 5000
+  #   op_defaults:
+  #     timeout: 600
+  #     record-pending: true
+  #   # optional, url or template file path to configure the cluster with a cluster configuration file
+  #   # Warning: values in the configuration file for properties, rsc_defaults or op_defaults have
+  #   # preference over the previous data in this pillar file, so they will be overwritten
   #   url: path_to_configfile
-  #   is_xml: False
+  #   method: update # update by default
+  #   is_xml: False # False by default
   #   # optional, jinja2 template can be used to create the configuration file.
   #   template:
   #     source: path_to_template
