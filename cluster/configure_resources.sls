@@ -1,6 +1,9 @@
 {%- from "cluster/map.jinja" import cluster with context -%}
 {% set host = grains['host'] %}
 
+include:
+  - .configure_sbd_resource
+
 {% if cluster.configure is defined %}
 
 # Configure the cluster properties
@@ -43,6 +46,7 @@ configure-the-cluster:
     - name: {{ cluster.configure.method|default("update") }}
     - url: {{ cluster.configure.url|default(url) }}
     - is_xml: {{ cluster.configure.is_xml|default(False) }}
+    - force: {{ cluster.configure.force|default(False) }}
     - require:
         {% if cluster.init == host %}
         - bootstrap-the-cluster

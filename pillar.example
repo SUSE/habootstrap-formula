@@ -42,6 +42,18 @@ cluster:
   #   device:
   #      - /dev/by-label/sbd-disk1
   #      - /dev/by-label/sbd-disk2
+  #   # optional: Configure sbd cluster resource. This updates the resource stonith-sbd created if sbd is enabled
+  #   # Warning: sbd configuration will be overwritten if the resource is defined in the configure template later
+  #   configure_resource:
+  #     #force: False # Force commit. Use with caution, this can allow invalid parameters in the configuration
+  #     params:
+  #       pcmk_delay_max: 15
+  #     op:
+  #       monitor:
+  #        timeout: 15
+  #        interval: 15
+  #     meta:
+  #       resource-stickiness: 3000
 
   # optional: Install required packages to run the cluster (true by default)
   # pre-configured packages sometimes exist for development purposes
@@ -106,6 +118,7 @@ cluster:
   #   url: path_to_configfile
   #   method: update # update by default
   #   is_xml: False # False by default
+  #   force: False # Force commit. Use with caution, this can allow invalid parameters in the configuration. False by default
   #   # optional, jinja2 template can be used to create the configuration file.
   #   template:
   #     source: path_to_template
