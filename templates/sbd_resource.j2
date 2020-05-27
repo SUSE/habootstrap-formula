@@ -1,0 +1,24 @@
+{# context is coming from configure_sbd_resource.sls #}
+
+primitive stonith-sbd stonith:external/sbd \
+  {%- if configure.params is defined and configure.params|length>0 %}
+  params \
+  {%- for param, value in configure.params.items() %}
+    {{ param }}={{ value }} \
+  {%- endfor %}
+  {%- endif %}
+  {%- if configure.op is defined and configure.op|length>0 %}
+  {%- for op_item, op_values in configure.op.items() %}
+  op \
+    {{ op_item }} \
+    {%- for op_data, op_value in op_values.items() %}
+      {{ op_data }}={{ op_value }} \
+    {%- endfor %}
+  {%- endfor %}
+  {%- endif %}
+  {%- if configure.meta is defined and configure.meta|length>0 %}
+  {%- for meta, value in configure.meta.items() %}
+  meta \
+    {{ meta }}={{ value }} \
+  {%- endfor %}
+  {%- endif %}

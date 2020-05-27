@@ -42,6 +42,18 @@ cluster:
   #   device:
   #      - /dev/by-label/sbd-disk1
   #      - /dev/by-label/sbd-disk2
+  #   # optional: Configure sbd cluster resource. This updates the resource stonith-sbd created if sbd is enabled
+  #   # Warning: sbd configuration will be overwritten if the resource is defined in the configure template later
+  #   configure_resource:
+  #     #force: False # Force commit. Use with caution, this can allow invalid parameters in the configuration
+  #     params:
+  #       pcmk_delay_max: 15
+  #     op:
+  #       monitor:
+  #        timeout: 15
+  #        interval: 15
+  #     meta:
+  #       resource-stickiness: 3000
 
   # optional: Install required packages to run the cluster (true by default)
   # pre-configured packages sometimes exist for development purposes
@@ -89,10 +101,24 @@ cluster:
 
   # optional: Configure cluster resource agents and constraints
   # configure:
-  #   method: update
-  #   # optional, url or template, one of them must be used
+  #   # optional, configure cluster properties and defaults. Find more information running man pacemaker-schedulerd
+  #   # add key/value entries for each specific configuration set
+  #   properties:
+  #     stonith-timeout: 144s
+  #     stonith-enabled: true
+  #   rsc_defaults:
+  #     resource-stickiness: 1000
+  #     migration-threshold: 5000
+  #   op_defaults:
+  #     timeout: 600
+  #     record-pending: true
+  #   # optional, url or template file path to configure the cluster with a cluster configuration file
+  #   # Warning: values in the configuration file for properties, rsc_defaults or op_defaults have
+  #   # preference over the previous data in this pillar file, so they will be overwritten
   #   url: path_to_configfile
-  #   is_xml: False
+  #   method: update # update by default
+  #   is_xml: False # False by default
+  #   force: False # Force commit. Use with caution, this can allow invalid parameters in the configuration. False by default
   #   # optional, jinja2 template can be used to create the configuration file.
   #   template:
   #     source: path_to_template

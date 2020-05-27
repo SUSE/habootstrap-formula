@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Thu May 21 10:12:17 UTC 2020 - Xabier Arbulu <xarbulu@suse.com>
+
+- Version bump 0.3.6
+  * Add the option to configure the cluster properties and defaults
+  * Add the option to configure the sbd resource parameters
+  (bsc#1170702)
+
+-------------------------------------------------------------------
 Fri May 15 07:25:49 UTC 2020 - Stefano Torresi <stefano.torresi@suse.com>
 
 - Version bump 0.3.5
