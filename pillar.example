@@ -35,8 +35,11 @@ cluster:
   # admin_ip: 10.20.30.40
 
   # optional: Configure SBD
+  # Diskless and using a disk are self exclusive options
   # sbd:
-  #   # optional: Configure an SBD device
+  #   # Configure SBD diskless
+  #   device: False
+  #   # Configure an SBD device
   #   device: /dev/by-label/sbd-disk
   #   # multiple disks can be set using a list
   #   device:
