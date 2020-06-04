@@ -17,9 +17,10 @@ bootstrap-the-cluster:
      {% if cluster.admin_ip is defined %}
      - admin_ip: {{ cluster.admin_ip }}
      {% endif %}
-     {% if cluster.sbd is defined %}
+     {% if cluster.sbd is defined and cluster.sbd.device is defined %}
+     {% if cluster.sbd.device is sameas false %}
      - sbd: True
-     {% if cluster.sbd.device is defined %}
+     {% else %}
      - sbd_dev: {{ cluster.sbd.device|json }}
      {% endif %}
      {% endif %}
