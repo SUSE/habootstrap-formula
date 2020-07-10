@@ -1,22 +1,21 @@
-# HA Cluster bootstrap salt formula
+# HA Cluster bootstrap Salt formula
 
 Salt formula to bootstrap and manage a [ClusterLabs](https://clusterlabs.org/) high availability cluster.
 
-Mainly adapted to SUSE / openSUSE Linux distributions (it is based in
+Mainly adapted to Linux distributions for SUSE (it is based in
 [crmsh](https://github.com/ClusterLabs/crmsh)), but it should be usable on other distributions with
 some modifications.
 
 ## Features
 
-The formula provides the capability to create and configure a multi node HA cluster. Here some
-features:
+The formula provides the capability to create and configure a multi node HA cluster. Here are some of the features:
 - Initialize a cluster
 - Join a node to an existing cluster
 - Remove a node from an existing cluster
 - Configure the pre-requirements (install required packages, configure `ntp/chrony`, create ssh-keys, etc)
-- Auto detect if the cluster is running in a cloud provider (Azure, AWS or GCP)
-- Configure sbd
-- Configure corosync
+- Auto detect if the cluster is running in a cloud provider (Azure, AWS, or GCP)
+- Configure SBD
+- Configure Corosync
 - Configure the resource agents
 - Install and configure the [ha_cluster_exporter](https://github.com/ClusterLabs/ha_cluster_exporter)
 
@@ -29,14 +28,14 @@ The project can be installed in many ways, including but not limited to:
 
 ### RPM
 
-On openSUSE or SUSE Linux Enterprise you can just use the `zypper` system package manager:
+On openSUSE or SUSE Linux Enterprise use `zypper` package manager:
 ```shell
 zypper install habootstrap-formula
 ```
 
-**Important!** This will install the formula in `/usr/share/salt-formulas/states/cluster`. Make sure that `/usr/share/salt-formulas/states` entry is correctly configured in your salt minion configuration `file_roots` entry if the formula is used in a masterless mode.
+**Important!** This will install the formula in `/usr/share/salt-formulas/states/cluster`. Make sure that `/usr/share/salt-formulas/states` entry is correctly configured in your Salt minion configuration `file_roots` entry if the formula is used in a masterless mode.
 
-You can find the latest development repositories at [SUSE's Open Build Service](https://build.opensuse.org/package/show/network:ha-clustering:sap-deployments:devel/habootstrap-formula).
+You can find the latest development repositories at SUSE's Open Build Service [network:ha-clustering:sap-deployments:devel/habootstrap-formula](https://build.opensuse.org/package/show/network:ha-clustering:sap-deployments:devel/habootstrap-formula).
 
 ### Manual clone
 
@@ -45,28 +44,46 @@ git clone https://github.com/SUSE/habootstrap-formula
 cp -R cluster /srv/salt
 ```
 
-**Important!** The formulas depends on `salt-shaptools` package, so make sure it is installed properly if you follow the manual installation.
+**Important!** The formulas depends on `salt-shaptools` package. Make sure it is installed properly if you follow the manual installation.
 
 ## Usage
 
-To use the formula the `cluster` entry must be included in the salt execution `top.sls` file. Here an example to execute the cluster formula in all of the nodes:
+Follow the next steps to configure the formula execution. After this, the formula can be executed using `master/minion` or `masterless` options:
 
-```
-# This file is /srv/salt/top.sls
-base:
-  '*':
-    - cluster
-```
+1. Modify the `top.sls` file (by default stored in `/srv/salt`) including the `cluster` entry.
 
-To configure the execution a pillar file is needed. Here an example of a pillar file for this formula: [pillar.example](https://github.com/SUSE/habootstrap-formula/blob/master/pillar.example)
-This file must be stored in `/srv/pillar` as `cluster.sls` and the same folder must contain a `top.sls` to use it. For example:
+   Here an example to execute the cluster formula in all of the nodes:
 
-```
-# This file is /srv/pillar/top.sls
-base:
-  '*':
-    - cluster
-```
+   ```
+   # This file is /srv/salt/top.sls
+   base:
+     '*':
+       - cluster
+   ```
+
+2. Customize the execution pillar file. Here an example of a pillar file for this formula with all of the options: [pillar.example](https://github.com/SUSE/habootstrap-formula/blob/master/pillar.example)
+
+3. Set the execution pillar file. For that, modify the `top.sls` of the pillars (by default stored in `/srv/pillar`) including the `cluster` entry and copy your specific `cluster.sls` pillar file in the same folder.
+
+   Here an example to apply the recently created `cluster.sls` pillar file to all of the nodes:
+
+   ```
+   # This file is /srv/pillar/top.sls
+   base:
+     '*':
+       - cluster
+   ```
+
+4. Execute the formula.
+
+   1. Master/Minion execution.
+
+      `salt '*' state.highstate`
+
+   2. Masterless execution.
+
+      `salt-call --local state.highstate`
+
 
 **Important!** The hostnames and minion names of the cluster nodes need to be the same for the
 cluster join procedure to work correctly, and the nodes need to be able to reach each other by
@@ -89,10 +106,10 @@ SaltStack GPG renderer provides a secure encryption/decryption of pillar data. T
 
 ## OBS Packaging
 
-The CI will automatically publish new releases to SUSE's Open Build Service every time a pull request is merged in the `master` branch. For that, update the new package version in [habootstrap-formula.spec](https://github.com/SUSE/habootstrap-formula/blob/master/habootstrap-formula.spec) and
+The CI automatically publishes new releases to SUSE's Open Build Service every time a pull request is merged into `master` branch. For that, update the new package version in [habootstrap-formula.spec](https://github.com/SUSE/habootstrap-formula/blob/master/habootstrap-formula.spec) and
 add the new changes in [habootstrap-formula.changes](https://github.com/SUSE/habootstrap-formula/blob/master/habootstrap-formula.changes).
 
-The new version will published at:
+The new version is published at:
 - https://build.opensuse.org/package/show/network:ha-clustering:sap-deployments:devel/habootstrap-formula
 - https://build.opensuse.org/package/show/openSUSE:Factory/habootstrap-formula (only if the spec file version is increased)
 
