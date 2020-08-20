@@ -106,7 +106,7 @@ SaltStack GPG renderer provides a secure encryption/decryption of pillar data. T
 
 ## OBS Packaging
 
-The CI automatically publishes new releases to SUSE's Open Build Service every time a pull request is merged into `master` branch. For that, update the new package version in [habootstrap-formula.spec](https://github.com/SUSE/habootstrap-formula/blob/master/habootstrap-formula.spec) and
+The CI automatically publishes new releases to SUSE's Open Build Service every time a pull request is merged into `master` branch. For that, update the new package version in [_service](https://github.com/SUSE/habootstrap-formula/blob/master/_service) and
 add the new changes in [habootstrap-formula.changes](https://github.com/SUSE/habootstrap-formula/blob/master/habootstrap-formula.changes).
 
 The new version is published at:
