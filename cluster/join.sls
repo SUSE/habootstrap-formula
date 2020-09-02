@@ -1,5 +1,7 @@
 {%- from "cluster/map.jinja" import cluster with context -%}
 
+{% set lock_file = '/var/tmp/crmsh.lock' %}
+
 wait-for-cluster:
   http.wait_for_successful_query:
     - name: 'https://{{ cluster.init }}:7630/monitor?0'
@@ -14,6 +16,15 @@ wait-for-total-initialization:
     - require:
       - wait-for-cluster
 
+{% if cluster.join_lock %}
+acquire-lock-cluster:
+  cmd.run:
+    - name: ssh -T root@{{ cluster.init }} -o StrictHostKeyChecking=no '[ ! -f "{{ lock_file }}" ] && touch {{ lock_file }}'
+    - retry:
+        attempts: 30
+        interval: 10
+{% endif %}
+
 join-the-cluster:
   crm.cluster_joined:
      - name: {{ cluster.init }}
@@ -26,7 +37,16 @@ join-the-cluster:
      - interface: {{ cluster.interface }}
      {% endif %}
      - require:
-         - wait-for-total-initialization
+       - wait-for-total-initialization
+{%- if cluster.join_lock %}
+       - acquire-lock-cluster
+
+release-lock-cluster:
+  cmd.run:
+    - name: ssh -T root@{{ cluster.init }} -o StrictHostKeyChecking=no 'rm {{ lock_file }}'
+    - require:
+      - acquire-lock-cluster
+{% endif %}
 
 hawk:
   service.running:

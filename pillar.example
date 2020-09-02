@@ -31,6 +31,9 @@ cluster:
   # optional: Timeout in seconds to join to the cluster
   # join_timeout: 60
 
+  # optional: Lock the join process if multiple nodes are joining in parallel
+  # join_lock: true
+
   # optional: Configure a virtual IP resource in cluster
   # admin_ip: 10.20.30.40
 
