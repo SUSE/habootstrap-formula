@@ -1,6 +1,6 @@
 {%- from "cluster/map.jinja" import cluster with context -%}
 
-{% set lock_file = '/var/tmp/crmsh.lock' %}
+{% set lock_dir = '/var/tmp/habootstrap_join.lock' %}
 
 wait-for-cluster:
   http.wait_for_successful_query:
@@ -16,14 +16,20 @@ wait-for-total-initialization:
     - require:
       - wait-for-cluster
 
-{% if cluster.join_lock %}
+check-ssh-connection-availability:
+  cmd.run:
+    - name: ssh -o StrictHostKeyChecking=no -o EscapeChar=none -o ConnectTimeout=15 -T -o Batchmode=yes {{ cluster.init }} true
+    - require:
+      - wait-for-total-initialization
+
 acquire-lock-cluster:
   cmd.run:
-    - name: ssh -T root@{{ cluster.init }} -o StrictHostKeyChecking=no '[ ! -f "{{ lock_file }}" ] && touch {{ lock_file }}'
-    - retry:
-        attempts: 30
-        interval: 10
-{% endif %}
+    - name: until ssh -T root@{{ cluster.init }} -o StrictHostKeyChecking=no 'mkdir {{ lock_dir }}';do sleep 10;done
+    - timeout: {{ cluster.join_timeout }}
+    - output_loglevel: quiet
+    - hide_output: True
+    - require:
+      - check-ssh-connection-availability
 
 join-the-cluster:
   crm.cluster_joined:
@@ -37,16 +43,13 @@ join-the-cluster:
      - interface: {{ cluster.interface }}
      {% endif %}
      - require:
-       - wait-for-total-initialization
-{%- if cluster.join_lock %}
        - acquire-lock-cluster
 
 release-lock-cluster:
   cmd.run:
-    - name: ssh -T root@{{ cluster.init }} -o StrictHostKeyChecking=no 'rm {{ lock_file }}'
+    - name: ssh -T root@{{ cluster.init }} -o StrictHostKeyChecking=no 'rm -rf {{ lock_dir }}'
     - require:
       - acquire-lock-cluster
-{% endif %}
 
 hawk:
   service.running:

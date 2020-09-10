@@ -2,7 +2,6 @@ cluster:
   name: hacluster
   install_packages: true
   join_timeout: 60
-  join_lock: false
   wait_for_initialization: 20
   sshkeys:
     overwrite: false
