@@ -26,7 +26,6 @@ install_cluster_packages:
         interval: 15
     - pkgs:
       - corosync
-      - crmsh
       - csync2
       - drbd
       - drbd-utils
@@ -40,18 +39,21 @@ install_cluster_packages:
 
 {% endif %}
 
-{% if grains['cloud_provider'] == 'microsoft-azure' %}
+# The next 2 onlyif statements can be improved when salt version 3000 is used
+# https://docs.saltstack.com/en/latest/ref/states/requisites.html#onlyif
 install_additional_packages_azure:
   pkg.installed:
+    - onlyif: cat /etc/salt/grains | grep "cloud_provider:.*microsoft-azure"
     - retry:
         attempts: 3
         interval: 15
     - pkgs:
       - socat
-{% elif grains['cloud_provider'] == 'google-cloud-platform' %}
+
 {%- set python_version = 'python' if grains['pythonversion'][0] == 2 else 'python3' %}
 install_additional_packages_gcp:
   pkg.installed:
+    - onlyif: cat /etc/salt/grains | grep "cloud_provider:.*google-cloud-platform"
     - retry:
         attempts: 3
         interval: 15
@@ -61,4 +63,3 @@ install_additional_packages_gcp:
       - {{ python_version }}-google-auth-httplib2
       - {{ python_version }}-pyroute2 # Needed by gcp-vpc-move-route
     - resolve_capabilities: true
-{% endif %}

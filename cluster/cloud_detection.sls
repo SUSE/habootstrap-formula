@@ -1,8 +1,14 @@
-# crmsh must exist to run crm.detect_cloud
-{% do salt['pkg.install'](name='crmsh') %}
-{% do salt['grains.set']('cloud_provider', salt['crm.detect_cloud']()) %}
+install_crmsh:
+  pkg.installed:
+    - name: crmsh
+    - retry:
+        attempts: 3
+        interval: 15
 
-{% if grains['cloud_provider'] == 'google-cloud-platform' %}
-{% do salt['grains.set']('gcp_instance_id', salt['http.query'](url='http://metadata.google.internal/computeMetadata/v1/instance/id', header_dict={"Metadata-Flavor": "Google"})['body']) %}
-{% do salt['grains.set']('gcp_instance_name', salt['http.query'](url='http://metadata.google.internal/computeMetadata/v1/instance/name', header_dict={"Metadata-Flavor": "Google"})['body']) %}
-{% endif %}
+# This state will set the next grains are required by this formula and used configuration templates
+# All providers: cloud_provider
+# Only gcp: gcp_instance_id, gcp_instance_name
+set_cloud_data_in_grains:
+  crm.cloud_grains_present:
+    - require:
+      - install_crmsh
