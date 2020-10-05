@@ -15,29 +15,51 @@ cluster:
 
   init:
     $name: First node
-    $help: Minion which creates the cluster
     $optional: false
+    $help: Node which creates the cluster
 
   unicast:
     $type: boolean
     $default: false
+    $help: Use UDP instead of multicast
 
   interface:
     $type: text
-    $default: wlan0
+    $default: eth0
     $optional: true
+    $help: Network interface to use for cluster communication
+
+  wait_for_initialization:
+    $type: number
+    $default: 20
+    $optional: true
+    $help: Time in seconds between hawk service is available in the first node and join command is executed
+
+  join_timeout:
+    $type: number
+    $default: 60
+    $optional: true
+    $help: Timeout in seconds to join to the cluster
 
   admin_ip:
     $type: text
     $optional: true
+    $help: Configure a virtual IP resource in cluster
 
   ntp:
     $type: text
     $placeholder: pool.ntp.org
     $optional: true
+    $help: ntp server address
 
+  watchdog_checkbox:
+    $name: Configure watchdog
+    $type: boolean
+    $optional: true
+    $default: false
   watchdog:
     $name: Watchdog configuration
+    $visibleIf: .watchdog_checkbox == true
     $optional: true
     $type: group
     module:
@@ -50,9 +72,15 @@ cluster:
       $type: text
       $placeholder: /dev/watchdog
       $optional: true
-
+  
+  sbd_checkbox:
+    $name: Configure SBD device and SBD cluster resource
+    $type: boolean
+    $optional: true
+    $default: false
   sbd:
     $name: SBD configuration
+    $visibleIf: .sbd_checkbox == true
     $optional: true
     $type: group
     diskless_checkbox:
@@ -61,13 +89,125 @@ cluster:
       $default: false
       $optional: true
     device:
-      $name: SBD device url
-      $type: text
-      $placeholder: /dev/vdb
+      $visibleIf: .diskless_checkbox == false
+      $name: SBD Device(s)
       $optional: true
+      $type: edit-group
+      $itemName: ""
+      $minItems: 0
+      $prototype:
+        $name: SBD device path
+        $optional: true
+        $type: text
+    configure_sbd_checkbox:
+      $name: Configure sbd cluster resource
+      $type: boolean
+      $default: false
+      $help: This updates the resource stonith-sbd created if SBD is enabled. SBD configuration will be overwritten if the resource is defined in the configure template
+    configure_resource:
+      $name: Configure SBD resource
+      $visibleIf: .configure_sbd_checkbox == true
+      $optional: true
+      $type: group
+      force:
+        $name: Force commit
+        $type: boolean
+        $default: false
+        $optional: true
+        $help: Force commit. Use with caution, this can allow invalid parameters in the configuration
+      configure_resource_params:
+        $name: Configure SBD resource parameters
+        $type: boolean
+        $default: false
+        $optional: true
+        $help: Mark this option to configure SBD resource parameters
+      params:
+        $name: parameters
+        $visibleIf: .configure_resource_params == true
+        $type: edit-group
+        $optional: true
+        $prototype:
+          $name: New parameter
+          key:
+            $name: Parameter name
+            $optional: true
+          value:
+            $name: Parameter value
+            $optional: true
+      configure_resource_operations:
+        $name: Configure SBD resource operations
+        $type: boolean
+        $default: false
+        $optional: true
+        $help: Mark this option to configure SBD resource operations like monitor        
+      op:  
+        $name: operation
+        $visibleIf: .configure_resource_operations == true
+        $type: group
+        $optional: true
+        resource_op_options:
+          $name: Select operation
+          $type: select
+          $values: [monitor, start, stop]
+        monitor:
+          $visibleIf: .resource_op_options == monitor
+          $optional: true
+          $type: edit-group
+          $prototype:
+            $name: Monitor op parameter
+            key:
+              $name: Parameter
+            value:
+              $name: New value
+        start:
+          $visibleIf: .resource_op_options == start
+          $optional: true
+          $type: edit-group
+          $prototype:
+            $name: start op parameter
+            key:
+              $name: Parameter
+            value:
+              $name: New value
+        stop:
+          $visibleIf: .resource_op_options == stop
+          $optional: true
+          $type: edit-group
+          $optional: true
+          $prototype:
+            $name: stop op parameter
+            key:
+              $name: Parameter
+            value:
+              $name: New value
+      configure_resource_meta:
+        $name: Configure SBD meta attributes
+        $type: boolean
+        $default: false
+        $optional: true
+        $help: Mark this option to configure meta attributes
+      meta:
+        $name: meta
+        $visibleIf: .configure_resource_meta == true
+        $type: edit-group
+        $optional: true
+        $prototype:
+          $name: meta attribute
+          key:
+            $name: attribute name
+            $optional: true
+          value:
+            $name: attribute value
+            $optional: true
 
+  sshkeys_checkbox:
+    $name: Manage ssh key usage
+    $type: boolean
+    $optional: true
+    $default: false
   sshkeys:
     $name: SSH keys configuration
+    $visibleIf: .sshkeys_checkbox == true
     $optional: true
     $type: group
     authorize_keys:
@@ -84,11 +224,17 @@ cluster:
     password:
       $visibleIf: .authorize_keys == true
       $name: First node root password
-      $type: text
-      $optional: true
+      $type: password
+      $optional: false
 
+  resource_agents_checkbox:
+    $name: Install new resource agents
+    $type: boolean
+    $optional: true
+    $default: false
   resource_agents:
     $name: Resource agents to install
+    $visibleIf: .resource_agents_checkbox == true
     $optional: true
     $type: edit-group
     $itemName: ""
@@ -98,22 +244,107 @@ cluster:
       $optional: true
       $type: text
 
+  corosync_checkbox:
+    $name: Configure corosync
+    $type: boolean
+    $optional: true
+    $default: false
+  corosync:
+    $name: Corosync configuration
+    $visibleIf: .corosync_checkbox == true
+    $type: edit-group
+    $minItems: 0
+    $prototype:
+      $name: Corosync parameter
+      $optional: true
+      key:
+        $name: Parameter name
+        $optional: true
+      value:
+        $name: Parameter options
+        $type: edit-group
+        $minItems: 0
+        $prototype:
+          key:
+            $name: Option name
+            $optional: true
+          value:
+            $name: Option value
+            $optional: true
+
   configure_checkbox:
     $name: Configure resource agents with configuration file
     $type: boolean
+    $optional: true
     $default: false
-
   configure:
     $visibleIf: .configure_checkbox == true
     $name: Resource agents and constraints configuration
     $optional: true
     $type: group
+    properties_checkbox:
+      $name: Configure cluster properties
+      $type: boolean
+      $default: false
+      $optional: true
+    properties:
+      $name: Cluster properties
+      $visibleIf: .properties_checkbox == true
+      $optional: true
+      $type: edit-group
+      $prototype:
+        $name: configure properties
+        key:
+          $name: Property name
+          $optional: true
+        value:
+          $name: Property value
+          $optional: true
+    rsc_defaults_checkbox:
+      $name: Configure resource defaults
+      $type: boolean
+      $default: false
+      $optional: true
+    rsc_defaults:
+      $name: Resource defaults
+      $visibleIf: .rsc_defaults_checkbox == true
+      $type: edit-group
+      $prototype:
+        $name: Resource defaults
+        key:
+          $name: name
+          $optional: true
+        value:
+          $name: value
+          $optional: true
+    op_defaults_checkbox:
+      $name: Configure operations defaults
+      $type: boolean
+      $default: false
+      $optional: true
+    op_defaults:
+      $name: Operation defaults
+      $visibleIf: .op_defaults_checkbox == true
+      $type: edit-group
+      $prototype:
+        $name: Operation defaults
+        key:
+          $name: name
+          $optional: true
+        value:
+          $name: value
+          $optional: true
     method:
       $name: Method
       $type: select
       $values: [replace, update, push]
       $default: update
       $optional: true
+    force:
+      $name: Force commit
+      $type: boolean
+      $default: false
+      $help: Force commit. Use with caution, this can allow invalid parameters in the configuration
     is_xml:
       $name: Configuration file is xml format
       $type: boolean
@@ -132,7 +363,7 @@ cluster:
       $visibleIf: .configure_url_checkbox == false
       $name: Jinja configuration template
       $optional: true
-      $type: namespace
+      $type: group
       source:
         $name: Template file path
         $optional: true
@@ -155,17 +386,37 @@ cluster:
             $name: Parameter value
             $optional: true
 
-  add_exporter:
-    $name: Add HA cluster metrics exporter
+  remove_checkbox:
+    $name: Remove cluster node(s)
+    $type: boolean
+    $optional: true
+    $default: false
+  remove:
+    $name: Remove node(s) from cluster
+    $visibleIf: .remove_checkbox == true
+    $optional: true
+    $type: edit-group
+    $itemName: ""
+    $minItems: 0
+    $prototype:
+      $name: Cluster node to be removed
+      $optional: true
+      $type: text
+
+  monitoring_enabled:
+    $name: Enable monitoring via ha_cluster_exporter
     $type: boolean
     $default: false
-    $help: Mark if you want add the HA cluster metrics exporter
-  ha_exporter:
-    $name: HA cluster metrics exporter
+    $help: Mark if you want to enable monitoring and have the exporter installed in all the nodes
+
+  change_hacluster_password:
+    $name: Update the cluster password
+    $type: boolean
+    $default: false
     $optional: true
-    $visibleIf: .add_exporter == true
-    $type: group
-    exposition_port:
-      $name: HA cluster exporter (hawk-apiserver) exposition port
-      $type: text
-      $optional: true
+  hacluster_password:
+    $visibleIf: .change_hacluster_password == true
+    $name: New HA cluster password
+    $type: password
+    $optional: true
+  

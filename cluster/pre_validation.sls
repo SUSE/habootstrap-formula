@@ -15,8 +15,13 @@
   {% endif %}
 {% endif %}
 
-{# Check HA exporter #}
-{% if cluster.add_exporter is defined and cluster.add_exporter == false %}
-  {% do cluster.pop('ha_exporter') %}
+{% if cluster.sbd_checkbox is defined %}
+{% if cluster.sbd.diskless_checkbox is defined and cluster.sbd.diskless_checkbox is sameas true %}
+{% do cluster.sbd.update({'device': false}) %}
 {% endif %}
-{# Check HA exporter finish #}
+{% endif %}
+
+
+{% if cluster.sbd.configure_sbd_checkbox is not defined or cluster.sbd.configure_sbd_checkbox is sameas false %}
+{% do cluster.sbd.pop('configure_resource', none) %}
+{% endif %}
