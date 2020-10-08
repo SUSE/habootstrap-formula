@@ -419,4 +419,3 @@ cluster:
     $name: New HA cluster password
     $type: password
     $optional: true
-  
