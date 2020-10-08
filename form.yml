@@ -1,5 +1,5 @@
 cluster:
-  $name: Cluster
+  $name: HA Cluster
   $type: namespace
 
   install_packages:
