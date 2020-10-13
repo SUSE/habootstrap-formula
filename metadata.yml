@@ -1,4 +1,4 @@
 description:
-  Salt formula to bootstrap and manage an HA pacemaker ClusterLabs high availability cluster.
+  Salt formula to bootstrap and manage a pacemaker high availability cluster.
 group:
   HA Cluster
