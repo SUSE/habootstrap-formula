@@ -1,5 +1,5 @@
 cluster:
-  $name: Cluster
+  $name: HA Cluster
   $type: namespace
 
   install_packages:
@@ -419,4 +419,3 @@ cluster:
     $name: New HA cluster password
     $type: password
     $optional: true
-  
