@@ -15,7 +15,7 @@
   {% endif %}
 {% endif %}
 
-{% if cluster.sbd_checkbox is defined %}
+{% if cluster.sbd is defined and cluster.sbd_checkbox is defined %}
 {% if cluster.sbd.diskless_checkbox is defined and cluster.sbd.diskless_checkbox is sameas true %}
 {% do cluster.sbd.update({'device': false}) %}
 {% endif %}
