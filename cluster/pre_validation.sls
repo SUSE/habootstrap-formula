@@ -16,12 +16,10 @@
 {% endif %}
 
 {% if cluster.sbd is defined and cluster.sbd_checkbox is defined %}
-{% if cluster.sbd.diskless_checkbox is defined and cluster.sbd.diskless_checkbox is sameas true %}
-{% do cluster.sbd.update({'device': false}) %}
-{% endif %}
-{% endif %}
-
-
-{% if cluster.sbd.configure_sbd_checkbox is not defined or cluster.sbd.configure_sbd_checkbox is sameas false %}
-{% do cluster.sbd.pop('configure_resource', none) %}
+  {% if cluster.sbd.diskless_checkbox is defined and cluster.sbd.diskless_checkbox is sameas true %}
+    {% do cluster.sbd.update({'device': false}) %}
+  {% endif %}
+  {% if cluster.sbd.configure_sbd_checkbox is defined and cluster.sbd.configure_sbd_checkbox is sameas false %}
+    {% do cluster.sbd.pop('configure_resource', none) %}
+  {% endif %}
 {% endif %}
