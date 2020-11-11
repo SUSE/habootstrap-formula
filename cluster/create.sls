@@ -25,6 +25,11 @@ bootstrap-the-cluster:
      {% endif %}
      {% endif %}
      - no_overwrite_sshkey: {{ not cluster.sshkeys.overwrite }}
+     {% if cluster.qdevice is defined %}
+     {% if cluster.qdevice.qnetd_hostname is defined %}
+     - qnetd_hostname: {{ cluster.qdevice.qnetd_hostname }}
+     {% endif %}
+     {% endif %}
 
 hawk:
   service.running:
