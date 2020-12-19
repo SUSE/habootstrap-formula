@@ -215,12 +215,6 @@ cluster:
       $type: boolean
       $default: false
       $optional: true
-    overwrite:
-      $visibleIf: .authorize_keys == true
-      $name: Overwrite current keys
-      $type: boolean
-      $default: false
-      $optional: true
     password:
       $visibleIf: .authorize_keys == true
       $name: First node root password

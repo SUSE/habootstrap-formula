@@ -19,7 +19,6 @@ function generate_cluster_pillar {
       device: '/dev/vdc'
     ntp: pool.ntp.org
     sshkeys:
-      overwrite: true
       password: linux
     resource_agents:
       - SAPHanaSR
