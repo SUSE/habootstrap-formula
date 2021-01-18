@@ -39,6 +39,18 @@ install_cluster_packages:
 
 {% endif %}
 
+{% if cluster.qdevice is defined %}
+{% if cluster.qdevice.qnetd_hostname is defined %}
+install_qdevice:
+  pkg.installed:
+    - retry:
+        attempts: 3
+        interval: 15
+    - pkgs:
+      - corosync-qdevice
+{% endif %}
+{% endif %}
+
 # The next 2 onlyif statements can be improved when salt version 3000 is used
 # https://docs.saltstack.com/en/latest/ref/states/requisites.html#onlyif
 install_additional_packages_azure:

@@ -58,6 +58,10 @@ cluster:
   #     meta:
   #       resource-stickiness: 3000
 
+  # optional: Configure qdevice
+  # qdevice:
+  #   qnetd_hostname: hostname
+
   # optional: Install required packages to run the cluster (true by default)
   # pre-configured packages sometimes exist for development purposes
   # install_packages: true
