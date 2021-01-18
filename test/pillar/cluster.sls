@@ -7,5 +7,4 @@ cluster:
     device: /dev/watchdog
   ntp: pool.ntp.org
   sshkeys:
-    overwrite: true
     password: vagrant

@@ -13,13 +13,6 @@ create_ssh_directory:
 {% if cluster.sshkeys.get('password', False) %}
 {% set password = cluster.sshkeys.get('password') %}
 
-# Create a temporary key to provide access for the joining node to the 1st node
-{% if cluster.sshkeys.overwrite is sameas true %}
-create_key:
-  cmd.run:
-    - name: yes y | sudo ssh-keygen -f /root/.ssh/id_rsa -C 'Cluster key' -N ''
-{% endif %}
-
 copy_ask_pass:
   file.managed:
     - name: /tmp/ssh_askpass
@@ -64,15 +57,4 @@ rm_ssh_pub:
       - copy_ssh_pub
 
 {% endif %}
-{% endif %}
-
-# ssh keys must always exist if overwrite is false or if the node is joining
-{% if cluster.sshkeys.overwrite is sameas false or cluster.init != host %}
-check_sshkey_exists:
-  file.exists:
-    - name: /root/.ssh/id_rsa
-
-check_sshkey_pub_exists:
-  file.exists:
-    - name: /root/.ssh/id_rsa.pub
 {% endif %}
