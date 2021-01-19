@@ -1,5 +1,5 @@
 -------------------------------------------------------------------
-Sat Dec 19 10:47:26 UTC 2020 - Aleksei Burlakov <aburlakov@suse.com>
+Tue Jan 19 08:32:50 UTC 2021 - Aleksei Burlakov <aburlakov@suse.com>
 
 - Remove --no-overwrite-sshkey option from the formula
 
