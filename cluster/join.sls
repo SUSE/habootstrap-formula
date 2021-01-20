@@ -1,7 +1,5 @@
 {%- from "cluster/map.jinja" import cluster with context -%}
 
-{% set lock_dir = '/var/tmp/habootstrap_join.lock' %}
-
 wait-for-cluster:
   http.wait_for_successful_query:
     - name: 'https://{{ cluster.init }}:7630/monitor?0'
@@ -22,15 +20,6 @@ check-ssh-connection-availability:
     - require:
       - wait-for-total-initialization
 
-acquire-lock-cluster:
-  cmd.run:
-    - name: until ssh -T root@{{ cluster.init }} -o StrictHostKeyChecking=no 'mkdir {{ lock_dir }}';do sleep 10;done
-    - timeout: {{ cluster.join_timeout }}
-    - output_loglevel: quiet
-    - hide_output: True
-    - require:
-      - check-ssh-connection-availability
-
 join-the-cluster:
   crm.cluster_joined:
      - name: {{ cluster.init }}
@@ -43,13 +32,7 @@ join-the-cluster:
      - interface: {{ cluster.interface }}
      {% endif %}
      - require:
-       - acquire-lock-cluster
-
-release-lock-cluster:
-  cmd.run:
-    - name: ssh -T root@{{ cluster.init }} -o StrictHostKeyChecking=no 'rm -rf {{ lock_dir }}'
-    - require:
-      - acquire-lock-cluster
+       - check-ssh-connection-availability
 
 hawk:
   service.running:
