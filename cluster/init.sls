@@ -11,7 +11,6 @@ include:
 {% if cluster.ntp is defined %}
   - .ntp
 {% endif %}
-  - .sshkeys
 {% if cluster.watchdog is defined %}
 {% if cluster.watchdog.module is defined %}
   - .watchdog
@@ -22,6 +21,8 @@ include:
 {% elif host in cluster.remove %}
   - .remove
 {% else %}
+  - .wait_cluster
+  - .sshkeys
   - .join
 {% endif %}
 {% if cluster.corosync is defined %}

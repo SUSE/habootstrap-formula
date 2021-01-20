@@ -7,11 +7,18 @@ create_ssh_directory:
    - user: root
    - group: root
    - mode: 600
-
-{% if cluster.init != host %}
+   - require:
+     - wait-for-total-initialization
 
 {% if cluster.sshkeys.get('password', False) %}
 {% set password = cluster.sshkeys.get('password') %}
+
+create_key:
+  cmd.run:
+    - name: yes y | sudo ssh-keygen -f /root/.ssh/id_rsa -C 'Cluster Internal on {{ grains['host'] }}' -N ''
+    - unless: 'test -e /root/.ssh/id_rsa'
+    - require:
+      - wait-for-total-initialization
 
 copy_ask_pass:
   file.managed:
@@ -20,6 +27,8 @@ copy_ask_pass:
     - user: root
     - group: root
     - mode: 755
+    - require:
+      - wait-for-total-initialization
 
 copy_ssh_pub:
   cmd.run:
@@ -56,5 +65,4 @@ rm_ssh_pub:
     - require:
       - copy_ssh_pub
 
-{% endif %}
 {% endif %}
