@@ -1,2 +1,6 @@
-#*.*
-.vagrant
+test/pillar
+test/pillar/*
+test/grains
+test/minion
+test/top.sls
+test/var

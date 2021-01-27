@@ -115,33 +115,20 @@ The new version is published at:
 
 ## Test
 
-The `Vagrantfile` and `test/` folder in this repository provides a
-sample cluster configuration that uses the formula to create the HA
-cluster.
+The `test` folder contains a set of tests to check the integrity of the formula. The tests check
+if the provided pillar data is correctly rendered to find inconsistencies on the usage of the
+user input. The tests don't really check if the `salt` code works properly, they rather test if
+the formula uses and renders the states with the correct values.
 
-This has been tested with Vagrant 2.1.2 on openSUSE Leap 15, but
-should hopefully work with other versions as well.
+In order to run the tests execute:
 
-``` bash
+```
 cd habootstrap-formula
-vagrant up
-./test/run
+bash ./test/validate-formula.sh
 ```
 
-These steps will create the cluster nodes (salt master, and two ha
-cluster nodes). In order to play with the formula, the file
-`test/pillar/cluster.sls` can be changed to apply different options to
-the cluster nodes (check the options in `pillar.example`).
-
-To add more nodes to the cluster, new nodes information must be added
-to `Vagrantfile`, `test/salt/common/hosts.sls` and `test/salt/top.sls`
-files.
-
-To access to the different nodes and play with them run:
-
-``` bash
-vagrant ssh {nodename}
-```
+In order to improve or add new tests the pillar example from `test/test_pillars` can be changed (or
+add new pillar files).
 
 ### Troubleshooting
 
