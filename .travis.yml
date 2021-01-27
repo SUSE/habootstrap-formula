@@ -22,7 +22,7 @@ jobs:
       script:
         - |
           # validate states
-          ci/validate-formula.sh
+          test/validate-formula.sh
 
     - stage: delivery
       if: type != pull_request

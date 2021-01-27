@@ -1,0 +1,4 @@
+cluster:
+  name: 'hacluster'
+  init: $METHOD
+  remove: ['hana03']
