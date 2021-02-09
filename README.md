@@ -1,3 +1,5 @@
+![Formula CI](https://github.com/SUSE/habootstrap-formula/workflows/Formula%20CI/badge.svg)
+
 # HA Cluster bootstrap Salt formula
 
 Salt formula to bootstrap and manage a [ClusterLabs](https://clusterlabs.org/) high availability cluster.
