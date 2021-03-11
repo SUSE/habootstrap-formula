@@ -128,7 +128,7 @@ cluster:
         $optional: true
         $prototype:
           $name: New parameter
-          key:
+          $key:
             $name: Parameter name
             $optional: true
           value:
@@ -155,7 +155,7 @@ cluster:
           $type: edit-group
           $prototype:
             $name: Monitor op parameter
-            key:
+            $key:
               $name: Parameter
             value:
               $name: New value
@@ -165,7 +165,7 @@ cluster:
           $type: edit-group
           $prototype:
             $name: start op parameter
-            key:
+            $key:
               $name: Parameter
             value:
               $name: New value
@@ -176,7 +176,7 @@ cluster:
           $optional: true
           $prototype:
             $name: stop op parameter
-            key:
+            $key:
               $name: Parameter
             value:
               $name: New value
@@ -193,7 +193,7 @@ cluster:
         $optional: true
         $prototype:
           $name: meta attribute
-          key:
+          $key:
             $name: attribute name
             $optional: true
           value:
@@ -251,7 +251,7 @@ cluster:
     $prototype:
       $name: Corosync parameter
       $optional: true
-      key:
+      $key:
         $name: Parameter name
         $optional: true
       value:
@@ -259,7 +259,7 @@ cluster:
         $type: edit-group
         $minItems: 0
         $prototype:
-          key:
+          $key:
             $name: Option name
             $optional: true
           value:
@@ -288,7 +288,7 @@ cluster:
       $type: edit-group
       $prototype:
         $name: configure properties
-        key:
+        $key:
           $name: Property name
           $optional: true
         value:
@@ -305,7 +305,7 @@ cluster:
       $type: edit-group
       $prototype:
         $name: Resource defaults
-        key:
+        $key:
           $name: name
           $optional: true
         value:
@@ -322,7 +322,7 @@ cluster:
       $type: edit-group
       $prototype:
         $name: Operation defaults
-        key:
+        $key:
           $name: name
           $optional: true
         value:
@@ -373,7 +373,7 @@ cluster:
         $itemName: ""
         $prototype:
           $name: New parameter
-          key:
+          $key:
             $name: Parameter name
             $optional: true
           value:
