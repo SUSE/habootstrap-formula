@@ -1,7 +1,7 @@
 {% from "cluster/map.jinja" import cluster with context -%}
 
-{% if cluster.configure_checkbox is defined %}
-  {% if cluster.configure.configure_url_checkbox is sameas true %}
+{% if cluster.configure_checkbox|default(false) %}
+  {% if cluster.configure.configure_url_checkbox|default(false) %}
     {% do cluster.configure.pop('template', none) %}
   {% else %}
     {% do cluster.configure.pop('url', none) %}
@@ -15,11 +15,11 @@
   {% endif %}
 {% endif %}
 
-{% if cluster.sbd is defined and cluster.sbd_checkbox is defined %}
-  {% if cluster.sbd.diskless_checkbox is defined and cluster.sbd.diskless_checkbox is sameas true %}
+{% if cluster.sbd is defined and cluster.sbd_checkbox|default(false) %}
+  {% if cluster.sbd.diskless_checkbox|default(false) %}
     {% do cluster.sbd.update({'device': false}) %}
   {% endif %}
-  {% if cluster.sbd.configure_sbd_checkbox is defined and cluster.sbd.configure_sbd_checkbox is sameas false %}
+  {% if not cluster.sbd.configure_sbd_checkbox|default(false) %}
     {% do cluster.sbd.pop('configure_resource', none) %}
   {% endif %}
 {% endif %}
