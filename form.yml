@@ -192,6 +192,20 @@ cluster:
           value:
             $name: attribute value
             $optional: true
+  
+  ocfs2_checkbox:
+    $name: Configure OCFS2 device
+    $type: boolean
+    $default: false
+  ocfs2:
+    $name: OCFS2 configuration
+    $visibleIf: .ocfs2_checkbox == true
+    $optional: true
+    $type: group
+    device:
+      $name: OCFS2 Device
+      $optional: true
+      $type: text
 
   sshkeys_checkbox:
     $name: Manage ssh key usage
