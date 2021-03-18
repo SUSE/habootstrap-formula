@@ -5,9 +5,9 @@ customize_corosync:
     - name: /etc/corosync/corosync.conf
     - data: {{ cluster.corosync|json }}
 
-corosync_service:
-  service.running:
-    - name: corosync
+reload_corosync_configuration:
+  cmd.run:
+    - name: corosync-cfgtool -R
     - restart: True
     - onchanges:
       - customize_corosync
