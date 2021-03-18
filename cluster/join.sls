@@ -4,7 +4,7 @@ check-ssh-connection-availability:
   cmd.run:
     - name: ssh -o StrictHostKeyChecking=no -o EscapeChar=none -o ConnectTimeout=15 -T -o Batchmode=yes {{ cluster.init }} true
     - require:
-      - wait-for-total-initialization
+      - wait-for-cluster
 
 join-the-cluster:
   crm.cluster_joined:

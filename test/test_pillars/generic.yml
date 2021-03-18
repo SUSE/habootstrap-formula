@@ -2,7 +2,6 @@ cluster:
   name: 'hacluster'
   init: $METHOD
   join_timeout: 120
-  wait_for_initialization: 10
   remove: ['hana03']
   interface: 'eth1'
   watchdog:

@@ -29,12 +29,6 @@ cluster:
     $optional: true
     $help: Network interface to use for cluster communication
 
-  wait_for_initialization:
-    $type: number
-    $default: 20
-    $optional: true
-    $help: Time in seconds between hawk service is available in the first node and join command is executed
-
   join_timeout:
     $type: number
     $default: 60
@@ -72,7 +66,7 @@ cluster:
       $type: text
       $placeholder: /dev/watchdog
       $optional: true
-  
+
   sbd_checkbox:
     $name: Configure SBD device and SBD cluster resource
     $type: boolean
@@ -139,8 +133,8 @@ cluster:
         $type: boolean
         $default: false
         $optional: true
-        $help: Mark this option to configure SBD resource operations like monitor        
-      op:  
+        $help: Mark this option to configure SBD resource operations like monitor
+      op:
         $name: operation
         $visibleIf: .configure_resource_operations == true
         $type: group

@@ -7,7 +7,6 @@ cluster:
     device: /dev/watchdog
   interface: 'eth1'
   unicast: true
-  wait_for_initialization: 10
   join_timeout: 120
   admin_ip: 10.20.30.40
   sbd:

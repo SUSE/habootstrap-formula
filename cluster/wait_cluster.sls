@@ -7,9 +7,3 @@ wait-for-cluster:
     - status: 200
     - verify_ssl: false
     - wait_for: {{ cluster.join_timeout }}
-
-wait-for-total-initialization:
-  cmd.run:
-    - name: 'sleep {{ cluster.wait_for_initialization }}'
-    - require:
-      - wait-for-cluster
