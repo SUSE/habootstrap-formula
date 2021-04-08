@@ -1,4 +1,5 @@
 {%- from "cluster/map.jinja" import cluster with context -%}
+{%- from "cluster/macros/get_crmsh_lock_file.sls" import get_crmsh_lock_file with context %}
 
 bootstrap-the-cluster:
   crm.cluster_initialized:
@@ -29,6 +30,17 @@ bootstrap-the-cluster:
      - qnetd_hostname: {{ cluster.qdevice.qnetd_hostname }}
      {% endif %}
      {% endif %}
+
+{% if cluster.corosync is defined %}
+# Claim the lock again. The cluster creation and corosync update must be executed atomically
+# The next command gets the crmsh lock folder (it has changed over time, so better to get it dynamically)
+# The lock folder looks like: /tmp/.crmsh_lock_directory or /run/.crmsh_lock_directory
+# If for some reason, any other node is able to acquire the lock before, the state will wait until it is free again
+claim-lock:
+  cmd.run:
+    - name: until mkdir -v {{ get_crmsh_lock_file() }};do sleep 5;done
+    - timeout: 300
+{% endif %}
 
 hawk:
   service.running:
