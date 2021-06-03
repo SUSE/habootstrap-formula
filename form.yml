@@ -55,7 +55,6 @@ cluster:
   watchdog_checkbox:
     $name: Configure watchdog
     $type: boolean
-    $optional: true
     $default: false
   watchdog:
     $name: Watchdog configuration
@@ -76,7 +75,6 @@ cluster:
   sbd_checkbox:
     $name: Configure SBD device and SBD cluster resource
     $type: boolean
-    $optional: true
     $default: false
   sbd:
     $name: SBD configuration
@@ -87,7 +85,6 @@ cluster:
       $name: Diskless SBD (If device is set this option is skipped)
       $type: boolean
       $default: false
-      $optional: true
     device:
       $visibleIf: .diskless_checkbox == false
       $name: SBD Device(s)
@@ -113,13 +110,11 @@ cluster:
         $name: Force commit
         $type: boolean
         $default: false
-        $optional: true
         $help: Force commit. Use with caution, this can allow invalid parameters in the configuration
       configure_resource_params:
         $name: Configure SBD resource parameters
         $type: boolean
         $default: false
-        $optional: true
         $help: Mark this option to configure SBD resource parameters
       params:
         $name: parameters
@@ -128,7 +123,7 @@ cluster:
         $optional: true
         $prototype:
           $name: New parameter
-          key:
+          $key:
             $name: Parameter name
             $optional: true
           value:
@@ -138,7 +133,6 @@ cluster:
         $name: Configure SBD resource operations
         $type: boolean
         $default: false
-        $optional: true
         $help: Mark this option to configure SBD resource operations like monitor        
       op:  
         $name: operation
@@ -155,7 +149,7 @@ cluster:
           $type: edit-group
           $prototype:
             $name: Monitor op parameter
-            key:
+            $key:
               $name: Parameter
             value:
               $name: New value
@@ -165,7 +159,7 @@ cluster:
           $type: edit-group
           $prototype:
             $name: start op parameter
-            key:
+            $key:
               $name: Parameter
             value:
               $name: New value
@@ -176,7 +170,7 @@ cluster:
           $optional: true
           $prototype:
             $name: stop op parameter
-            key:
+            $key:
               $name: Parameter
             value:
               $name: New value
@@ -184,7 +178,6 @@ cluster:
         $name: Configure SBD meta attributes
         $type: boolean
         $default: false
-        $optional: true
         $help: Mark this option to configure meta attributes
       meta:
         $name: meta
@@ -193,7 +186,7 @@ cluster:
         $optional: true
         $prototype:
           $name: meta attribute
-          key:
+          $key:
             $name: attribute name
             $optional: true
           value:
@@ -203,7 +196,6 @@ cluster:
   sshkeys_checkbox:
     $name: Manage ssh key usage
     $type: boolean
-    $optional: true
     $default: false
   sshkeys:
     $name: SSH keys configuration
@@ -214,7 +206,6 @@ cluster:
       $name: Share SSH keys information
       $type: boolean
       $default: false
-      $optional: true
     password:
       $visibleIf: .authorize_keys == true
       $name: First node root password
@@ -224,7 +215,6 @@ cluster:
   resource_agents_checkbox:
     $name: Install new resource agents
     $type: boolean
-    $optional: true
     $default: false
   resource_agents:
     $name: Resource agents to install
@@ -241,7 +231,6 @@ cluster:
   corosync_checkbox:
     $name: Configure corosync
     $type: boolean
-    $optional: true
     $default: false
   corosync:
     $name: Corosync configuration
@@ -251,7 +240,7 @@ cluster:
     $prototype:
       $name: Corosync parameter
       $optional: true
-      key:
+      $key:
         $name: Parameter name
         $optional: true
       value:
@@ -259,7 +248,7 @@ cluster:
         $type: edit-group
         $minItems: 0
         $prototype:
-          key:
+          $key:
             $name: Option name
             $optional: true
           value:
@@ -269,7 +258,6 @@ cluster:
   configure_checkbox:
     $name: Configure resource agents with configuration file
     $type: boolean
-    $optional: true
     $default: false
   configure:
     $visibleIf: .configure_checkbox == true
@@ -280,7 +268,6 @@ cluster:
       $name: Configure cluster properties
       $type: boolean
       $default: false
-      $optional: true
     properties:
       $name: Cluster properties
       $visibleIf: .properties_checkbox == true
@@ -288,7 +275,7 @@ cluster:
       $type: edit-group
       $prototype:
         $name: configure properties
-        key:
+        $key:
           $name: Property name
           $optional: true
         value:
@@ -298,14 +285,13 @@ cluster:
       $name: Configure resource defaults
       $type: boolean
       $default: false
-      $optional: true
     rsc_defaults:
       $name: Resource defaults
       $visibleIf: .rsc_defaults_checkbox == true
       $type: edit-group
       $prototype:
         $name: Resource defaults
-        key:
+        $key:
           $name: name
           $optional: true
         value:
@@ -315,14 +301,13 @@ cluster:
       $name: Configure operations defaults
       $type: boolean
       $default: false
-      $optional: true
     op_defaults:
       $name: Operation defaults
       $visibleIf: .op_defaults_checkbox == true
       $type: edit-group
       $prototype:
         $name: Operation defaults
-        key:
+        $key:
           $name: name
           $optional: true
         value:
@@ -343,12 +328,10 @@ cluster:
       $name: Configuration file is xml format
       $type: boolean
       $default: false
-      $optional: true
     configure_url_checkbox:
       $name: Use configuration file (template otherwise)
       $type: boolean
       $default: true
-      $optional: true
     url:
       $visibleIf: .configure_url_checkbox == true
       $name: Configuration file url (if used template data is skipped)
@@ -373,7 +356,7 @@ cluster:
         $itemName: ""
         $prototype:
           $name: New parameter
-          key:
+          $key:
             $name: Parameter name
             $optional: true
           value:
@@ -383,7 +366,6 @@ cluster:
   remove_checkbox:
     $name: Remove cluster node(s)
     $type: boolean
-    $optional: true
     $default: false
   remove:
     $name: Remove node(s) from cluster
@@ -407,7 +389,6 @@ cluster:
     $name: Update the cluster password
     $type: boolean
     $default: false
-    $optional: true
   hacluster_password:
     $visibleIf: .change_hacluster_password == true
     $name: New HA cluster password
