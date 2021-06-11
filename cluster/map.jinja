@@ -4,6 +4,37 @@
 {% import_yaml "cluster/defaults.yaml" as defaults %}
 {% set cluster = salt['pillar.get']('cluster', default=defaults.cluster, merge=True) %}
 
-{% if not cluster.configure_checkbox|default(false) %}
-  {% do cluster.pop('configure', none) %}
+# This next operations are only used in Suse Manager executions
+# Some of the elements (as configure_checkbox) are carried from the form.yml
+
+{% if cluster.configure_checkbox is defined %}
+  {% if cluster.configure_checkbox %}
+    {% if cluster.configure.configure_url_checkbox %}
+      {% do cluster.configure.pop('template', none) %}
+    {% else %}
+      {% do cluster.configure.pop('url', none) %}
+      {% if cluster.configure.template.parameters is defined and cluster.configure.template.parameters|length > 0 %}
+        {% set new_parameters = {} %}
+        {% for new_item in cluster.configure.template.parameters %}
+          {% do new_parameters.update({new_item.key: new_item.value}) %}
+        {% endfor %}
+        {% do cluster.configure.template.update({'parameters': new_parameters}) %}
+      {% endif %}
+    {% endif %}
+  {% else %}
+    {% do cluster.pop('configure', none) %}
+  {% endif %}
+{% endif %}
+
+{% if cluster.sbd_checkbox is defined %}
+  {% if cluster.sbd_checkbox %}
+    {% if cluster.sbd.diskless_checkbox|default(false) %}
+      {% do cluster.sbd.update({'device': false}) %}
+    {% endif %}
+    {% if not cluster.sbd.configure_sbd_checkbox|default(false) %}
+      {% do cluster.sbd.pop('configure_resource', none) %}
+    {% endif %}
+  {% else %}
+    {% do cluster.pop('sbd', none) %}
+  {% endif %}
 {% endif %}

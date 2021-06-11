@@ -2,7 +2,6 @@
 {% set host = grains['host'] %}
 
 include:
-  - .pre_validation
   - .cloud_detection
 {% if cluster.install_packages is sameas true %}
   - .packages
