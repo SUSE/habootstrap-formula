@@ -6,6 +6,7 @@
 {% if grains['os_family'] == 'Suse' %}
 {% set pattern_available = salt['cmd.retcode']('zypper search patterns-ha-ha_sles') %}
 {% endif %}
+{%- set python_version = 'python' if grains['pythonversion'][0] == 2 else 'python3' %}
 
 {% if pattern_available == 0 %}
 # refresh is disabled to avoid errors during the call
@@ -61,8 +62,14 @@ install_additional_packages_azure:
         interval: 15
     - pkgs:
       - socat
+      # needed for azure fence agent
+      - {{ python_version }}-azure-mgmt-compute
+      - {{ python_version }}-azure-mgmt-resource
+      # needed for newer azure API
+      {% if python_version == 'python3' %}
+      - {{ python_version }}-azure-identity
+      {% endif %}
 
-{%- set python_version = 'python' if grains['pythonversion'][0] == 2 else 'python3' %}
 install_additional_packages_gcp:
   pkg.installed:
     - onlyif: cat /etc/salt/grains | grep "cloud_provider:.*google-cloud-platform"
