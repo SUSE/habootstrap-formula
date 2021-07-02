@@ -131,6 +131,13 @@ cluster:
   #     parameters:
   #       param1: value1
   #       param2: value2
+  #       # examples to use native fencing 
+  #       ## on azure
+  #       azure_subscription_id: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+  #       azure_resource_group_name: my-resource-group
+  #       azure_tenant_id: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+  #       azure_fence_agent_app_id: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+  #       azure_fence_agent_client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
 # -*- mode: yaml -*-

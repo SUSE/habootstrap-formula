@@ -106,6 +106,36 @@ SaltStack GPG renderer provides a secure encryption/decryption of pillar data. T
 
 - If a masterless approach is used (as in the current automated deployment) the gpg private key must be imported in all the nodes. This might require the copy/paste of the keys.
 
+## Advanced usage
+
+### Native Fencing
+
+If running in the cloud, some cloud providers provide a native way (e.g. through an API) to fence nodes.
+
+#### AWS
+
+SUSE's recommendation is to use the native method to fence cluster nodes in AWS.
+
+The AWS specific implementation is the "AWS STONITH Agent" called `stonith:external/ec2`.
+
+No additional configuration is needed to enable this.
+
+#### Azure
+
+SUSE's recommendation is to use SBD (e.g. via iSCSI) to fence cluster nodes in azure.
+
+The alternative azure specific implementation is the "Azure Fence Agent" called `stonith:fence_azure_arm`.
+
+Please read the Microsoft Azure documentation [Create Azure Fence agent STONITH device](https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-suse-pacemaker#create-azure-fence-agent-stonith-device) for the detailed steps that are needed in azure.
+
+Look into `pillar.example` for examples on how to configure this in salt.
+
+The pillars will be used by other formulas, e.g. <https://github.com/SUSE/sapnwbootstrap-formula> to configure the needed cluster resources.
+
+#### GCP
+
+TBD
+
 ## OBS Packaging
 
 The CI automatically publishes new releases to SUSE's Open Build Service every time a pull request is merged into `master` branch. For that, update the new package version in [_service](https://github.com/SUSE/habootstrap-formula/blob/master/_service) and
