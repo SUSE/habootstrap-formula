@@ -26,6 +26,9 @@ include:
 {% endif %}
 {% if cluster.corosync is defined %}
   - .corosync
+{% if cluster.init == host %}
+  - .wait_cluster
+{% endif %}
 {% endif %}
 {% if host not in cluster.remove %}
   - .configure_resources
