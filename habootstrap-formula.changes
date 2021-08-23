@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Aug 23 21:48:36 UTC 2021 - Eike Waldt <waldt@b1-systems.de>
+
+- Version bump 0.4.4
+  * Implement wait on first node or else applying resources too fast will fail due to UNCLEAN node
+
+-------------------------------------------------------------------
 Mon Jun 28 17:24:06 UTC 2021 - Eike Waldt <waldt@b1-systems.de>
 
 - Version bump 0.4.3
