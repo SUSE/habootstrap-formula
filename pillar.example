@@ -58,6 +58,11 @@ cluster:
   #     meta:
   #       resource-stickiness: 3000
 
+  # optional: Configure OCFS2 device
+  # ocfs2:
+  #   device: /dev/by-label/ocfs2-disk
+  #   mount: /srv/cluster_ocfs2
+
   # optional: Configure qdevice
   # qdevice:
   #   qnetd_hostname: hostname

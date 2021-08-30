@@ -24,6 +24,12 @@ bootstrap-the-cluster:
      - sbd_dev: {{ cluster.sbd.device|json }}
      {% endif %}
      {% endif %}
+     {% if cluster.ocfs2 is defined and cluster.ocfs2.device is defined %}
+     - ocfs2_dev: {{ cluster.ocfs2.device }}
+     {% if cluster.ocfs2.mount is defined %}
+     - ocfs2_mount: {{ cluster.ocfs2.mount }}
+     {% endif %}
+     {% endif %}
      {% if cluster.qdevice is defined %}
      {% if cluster.qdevice.qnetd_hostname is defined %}
      - qnetd_hostname: {{ cluster.qdevice.qnetd_hostname }}

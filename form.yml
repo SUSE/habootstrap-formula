@@ -192,6 +192,31 @@ cluster:
           value:
             $name: attribute value
             $optional: true
+  
+  ocfs2_checkbox:
+    $name: Configure OCFS2 device
+    $type: boolean
+    $default: false
+  ocfs2:
+    $name: OCFS2 configuration
+    $visibleIf: .ocfs2_checkbox == true
+    $optional: true
+    $type: group
+    device:
+      $name: OCFS2 Device(s)
+      $help: selecting multiple devices will automatically enable OCFS2 LVM 
+      $type: edit-group
+      $itemName: ""
+      $optional: true
+      $prototype:
+        $name: OCFS2 device path
+        $optional: true
+        $type: text
+    mount:
+      $name: Mount path
+      $help: Path where the OCFS2 file system will be mounted. Defaults to /srv/clusterfs.
+      $type: text
+      $optional: true
 
   sshkeys_checkbox:
     $name: Manage ssh key usage

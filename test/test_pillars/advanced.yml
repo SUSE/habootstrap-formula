@@ -24,6 +24,8 @@ cluster:
           interval: 10
       meta:
         resource-stickiness: 3000
+  ocfs2:
+    device: /dev/disk3
   qdevice:
     qnetd_hostname: qdevice_host
   ntp: pool.ntp.org
