@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Sep 08 11:37:27 UTC 2021 - Eike Waldt <waldt@b1-systems.de>
+
+- Version bump 0.4.4
+  * Wait for cluster startup after corosync restart
+
+-------------------------------------------------------------------
 Mon Jul 12 09:44:49 UTC 2021 - Cédric Bosdonnat <cbosdonnat@suse.com>
 
 - Add OCFS2 support
