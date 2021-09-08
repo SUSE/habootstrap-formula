@@ -13,3 +13,13 @@ corosync_service:
       - customize_corosync
     - watch:
       - customize_corosync
+
+# To prevent failing "crm configre load" commands after corosync restart
+wait-for-corosync-restart:
+  cmd.run:
+    - name: 'crm cluster wait_for_startup'
+    - require:
+      - corosync_service
+    - retry:
+        attempts: 20
+        interval: 10
