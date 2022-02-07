@@ -22,7 +22,7 @@ cluster:
   # interface: eth0
 
   # optional: UDP instead of multicast
-  # unicast: True
+  # unicast: true
 
   # optional: Time in seconds between hawk service is available in the first
   # node and join command is executed (20s by default)
@@ -67,8 +67,9 @@ cluster:
   # qdevice:
   #   qnetd_hostname: hostname
 
-  # optional: Install required packages to run the cluster (true by default)
-  # pre-configured packages sometimes exist for development purposes
+  # optional: Install required rpm packages to install SAP Netweaver (true by default).
+  # Pre-configured packages sometimes exist for development purposes.
+  # If set to false, these packages must be installed manually before formula execution.
   # install_packages: true
 
   # optional: ntp server

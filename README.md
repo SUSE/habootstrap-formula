@@ -31,22 +31,33 @@ The project can be installed in many ways, including but not limited to:
 ### RPM
 
 On openSUSE or SUSE Linux Enterprise use `zypper` package manager:
+
 ```shell
 zypper install habootstrap-formula
 ```
 
-**Important!** This will install the formula in `/usr/share/salt-formulas/states/cluster`. Make sure that `/usr/share/salt-formulas/states` entry is correctly configured in your Salt minion configuration `file_roots` entry if the formula is used in a masterless mode.
+**Important!** This will install the formula in `/usr/share/salt-formulas/states/cluster`. In case the formula is used in a masterless mode, make sure that the `/usr/share/salt-formulas/states` entry is correctly configured in the `file_roots` entry of the Salt minion configuration.
 
-You can find the latest development repositories at SUSE's Open Build Service [network:ha-clustering:sap-deployments:devel/habootstrap-formula](https://build.opensuse.org/package/show/network:ha-clustering:sap-deployments:devel/habootstrap-formula).
+Depending on the patch level of the target system and the release cycle of this project, the package in the regular repository might not be the latest one. If you want the latest features, have a look in the test development repositories at SUSE's Open Build Service [network:ha-clustering:sap-deployments:devel/habootstrap-formula](https://build.opensuse.org/package/show/network:ha-clustering:sap-deployments:devel/habootstrap-formula).
 
-### Manual clone
+### Manual Installation
+
+A manual installation can be done by cloning this repository:
 
 ```
 git clone https://github.com/SUSE/habootstrap-formula
+```
+
+**Important!** This will not install the the formula anywhere where salt can find it.  If the formula is used in a masterless mode, also make sure to copy the complete `netweaver` subdirectory to location defined in `file_roots` entry of your Salt minion configuration.
+
+I. e.:
+
+```
+cd habootstrap-formula
 cp -R cluster /srv/salt
 ```
 
-**Important!** The formulas depends on `salt-shaptools` package. Make sure it is installed properly if you follow the manual installation.
+**Important!** The formulas depends on [salt-shaptools](https://github.com/SUSE/salt-shaptools) package. Make sure it is installed properly if you follow the manual installation (the package can be installed as a RPM package too).
 
 ## Usage
 
@@ -54,7 +65,7 @@ Follow the next steps to configure the formula execution. After this, the formul
 
 1. Modify the `top.sls` file (by default stored in `/srv/salt`) including the `cluster` entry.
 
-   Here an example to execute the cluster formula in all of the nodes:
+   Here is an example to execute the cluster formula in all of the nodes:
 
    ```
    # This file is /srv/salt/top.sls
@@ -64,6 +75,7 @@ Follow the next steps to configure the formula execution. After this, the formul
    ```
 
 2. Customize the execution pillar file. Here an example of a pillar file for this formula with all of the options: [pillar.example](https://github.com/SUSE/habootstrap-formula/blob/master/pillar.example)
+The `pillar.example` can be found either as a link to the file in the master branch or a file in the file system at `/usr/share/salt-formulas/metadata/hana/pillar.example`.
 
 3. Set the execution pillar file. For that, modify the `top.sls` of the pillars (by default stored in `/srv/pillar`) including the `cluster` entry and copy your specific `cluster.sls` pillar file in the same folder.
 
@@ -102,6 +114,7 @@ SaltStack GPG renderer provides a secure encryption/decryption of pillar data. T
 - [SALT GPG RENDERERS](https://docs.saltstack.com/en/latest/ref/renderers/all/salt.renderers.gpg.html)
 
 **Note:**
+
 - Only passwordless gpg keys are supported, and the already existing keys cannot be used.
 
 - If a masterless approach is used (as in the current automated deployment) the gpg private key must be imported in all the nodes. This might require the copy/paste of the keys.
@@ -142,6 +155,7 @@ The CI automatically publishes new releases to SUSE's Open Build Service every t
 add the new changes in [habootstrap-formula.changes](https://github.com/SUSE/habootstrap-formula/blob/master/habootstrap-formula.changes).
 
 The new version is published at:
+
 - https://build.opensuse.org/package/show/network:ha-clustering:sap-deployments:devel/habootstrap-formula
 - https://build.opensuse.org/package/show/openSUSE:Factory/habootstrap-formula (only if the spec file version is increased)
 
