@@ -39,6 +39,8 @@ configure-cluster-op-defaults:
     - group: root
     - mode: 644
     - template: jinja
+    - require:
+        - set_cloud_data_in_grains
 {% endif %}
 
 configure-the-cluster:
