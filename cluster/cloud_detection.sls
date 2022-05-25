@@ -12,3 +12,4 @@ set_cloud_data_in_grains:
   crm.cloud_grains_present:
     - require:
       - install_crmsh
+    - reload_grains: true
