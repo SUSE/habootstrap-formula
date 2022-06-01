@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed May 25 12:12:57 UTC 2022 - Eike Waldt <waldt@b1-systems.de>
+
+- Version bump 0.4.5
+  * reload grains after setting cloud_provider (fix SLES 15 SP4)
+  * require set_cloud_data_in_grains to create resources (fix SLES 15 SP4)
+
+-------------------------------------------------------------------
 Mon Sep 08 11:37:27 UTC 2021 - Eike Waldt <waldt@b1-systems.de>
 
 - Version bump 0.4.4
