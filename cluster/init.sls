@@ -29,6 +29,7 @@ include:
 {% endif %}
 {% if host not in cluster.remove %}
   - .configure_resources
+  - .resources_maintenance
 {% endif %}
 {% if cluster.hacluster_password is defined %}
   - .hacluster_user
