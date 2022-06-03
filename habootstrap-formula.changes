@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Jun 03 11:25:12 UTC 2022 - Eike Waldt <waldt@b1-systems.de>
+
+- Version bump 0.4.6
+  * install ClusterTools2
+  * add possibility to run maintenance procedure on resources
+
+-------------------------------------------------------------------
 Wed May 25 12:12:57 UTC 2022 - Eike Waldt <waldt@b1-systems.de>
 
 - Version bump 0.4.5
