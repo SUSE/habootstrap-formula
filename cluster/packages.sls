@@ -18,6 +18,14 @@ patterns-ha-ha_sles:
         attempts: 3
         interval: 15
 
+install_cluster_packages:
+  pkg.installed:
+    - retry:
+        attempts: 3
+        interval: 15
+    - pkgs:
+      - ClusterTools2
+
 {% else %}
 
 install_cluster_packages:
@@ -37,6 +45,7 @@ install_cluster_packages:
       - pacemaker
       - resource-agents
       - sbd
+      - ClusterTools2
 
 {% endif %}
 
