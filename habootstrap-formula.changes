@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Aug 11 09:09:01 UTC 2022 - Christian Schneemann <schneemann@b1-systems.de>
+
+- Version bump 0.4.7
+  * moved templates dir in repository into cluster dir to be compatible with gitfs
+
+-------------------------------------------------------------------
 Wed Jun 03 11:25:12 UTC 2022 - Eike Waldt <waldt@b1-systems.de>
 
 - Version bump 0.4.6
