@@ -80,8 +80,7 @@ fi
 %dir %attr(0755, root, salt) %{fdir}/metadata
 
 %attr(0755, root, salt) %{fdir}/states/%{fname}
-%attr(0755, root, salt) %{fdir}/states/%{fname}/files
-%attr(0755, root, salt) %{fdir}/states/%{fname}/files/%{ftemplates}
+%attr(0755, root, salt) %{fdir}/states/%{fname}/%{ftemplates}
 %attr(0755, root, salt) %{fdir}/metadata/%{fname}
 
 %changelog
