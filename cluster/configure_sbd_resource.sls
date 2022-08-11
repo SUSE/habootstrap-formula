@@ -6,7 +6,7 @@
 create-sbd-resource-configuration:
   file.managed:
     - name: /tmp/sbd.config
-    - source: salt://cluster/templates/sbd_resource.j2
+    - source: salt://cluster/files/templates/sbd_resource.j2
     - user: root
     - group: root
     - mode: 644
