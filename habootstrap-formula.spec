@@ -38,7 +38,6 @@ Requires:       salt-formulas-configuration
 
 %define fname cluster
 %define fdir  %{_datadir}/salt-formulas
-%define ftemplates templates
 
 %description
 HA cluster salt deployment formula. This formula is capable to perform
@@ -59,7 +58,6 @@ module, which can be added running the `SUSEConnect -p sle-module-adv-systems-ma
 mkdir -p %{buildroot}%{fdir}/states/%{fname}
 mkdir -p %{buildroot}%{fdir}/metadata/%{fname}
 cp -R %{fname} %{buildroot}%{fdir}/states
-cp -R %{ftemplates} %{buildroot}%{fdir}/states/%{fname}
 cp -R form.yml pillar.example %{buildroot}%{fdir}/metadata/%{fname}
 if [ -f metadata.yml ]
 then
@@ -81,7 +79,6 @@ fi
 %dir %attr(0755, root, salt) %{fdir}/metadata
 
 %attr(0755, root, salt) %{fdir}/states/%{fname}
-%attr(0755, root, salt) %{fdir}/states/%{fname}/%{ftemplates}
 %attr(0755, root, salt) %{fdir}/metadata/%{fname}
 
 %changelog
