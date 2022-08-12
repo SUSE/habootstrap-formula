@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Aug 12 07:49:43 UTC 2022 - Eike Waldt <waldt@b1-systems.de>
+
+- Version bump 0.4.8
+  * install socat for gcp load-balancer resource
+
+-------------------------------------------------------------------
 Thu Aug 11 09:09:01 UTC 2022 - Christian Schneemann <schneemann@b1-systems.de>
 
 - Version bump 0.4.7
