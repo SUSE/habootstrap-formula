@@ -70,7 +70,7 @@ install_additional_packages_azure:
         attempts: 3
         interval: 15
     - pkgs:
-      - socat
+      - socat # needed for load-balancer resource
       # needed for azure fence agent
       - {{ python_version }}-azure-mgmt-compute
       - {{ python_version }}-azure-mgmt-resource
@@ -86,6 +86,7 @@ install_additional_packages_gcp:
         attempts: 3
         interval: 15
     - pkgs:
+      - socat # needed for load-balancer resource
       - {{ python_version }}-google-api-python-client # Needed by gcp-vpc-move-route and fence_gce
       - {{ python_version }}-google-auth
       - {{ python_version }}-google-auth-httplib2
